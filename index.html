@@ -3,11 +3,14 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon-192.png"/>
+<meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="Pensionados"/>
+<meta name="apple-mobile-web-app-title" content="Pensionados MX"/>
 <meta name="theme-color" id="meta-tc" content="#05090f"/>
-<title>Pensionados MX</title>
+<title>Pensionados MX v13</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 /* ========== THEMES ========== */
@@ -457,11 +460,59 @@ body{display:flex;flex-direction:column;}
 .empty-ico{font-size:44px;margin-bottom:12px;opacity:.35;}
 .empty h3{font-size:15px;font-weight:800;color:var(--sft);margin-bottom:4px;}
 .empty p{font-size:12px;color:var(--mut);}
+
+/* ── v13 NEW FEATURES ── */
+/* Search delete bar */
+.srch-del-bar{display:flex;align-items:center;gap:7px;padding:8px 10px;background:var(--s2);border-radius:var(--r2);margin-bottom:10px;border:1px solid var(--b2);flex-wrap:wrap;}
+.srch-sel-info{font-size:10px;font-weight:700;color:var(--sft);flex:1;min-width:0;}
+.srch-del-btn{padding:6px 11px;background:var(--red);color:#fff;border:none;border-radius:var(--r3);font-size:10px;font-weight:800;cursor:pointer;font-family:var(--fnt);white-space:nowrap;}
+.srch-del-btn:disabled{opacity:.35;pointer-events:none;}
+.srch-del-all-btn{padding:6px 11px;background:#3a0a0a;color:var(--red);border:1.5px solid var(--red);border-radius:var(--r3);font-size:10px;font-weight:800;cursor:pointer;font-family:var(--fnt);white-space:nowrap;}
+.srch-chk{width:22px;height:22px;border-radius:6px;border:2px solid var(--b3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;cursor:pointer;transition:.15s;background:var(--s2);}
+.srch-chk.on{background:var(--red);border-color:var(--red);}
+/* Appearance sheet */
+.app-section{background:var(--card);border:1px solid var(--b1);border-radius:var(--r2);padding:13px 14px;margin-bottom:12px;}
+.app-section-title{font-size:9px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;}
+.fz-slider-wrap{display:flex;align-items:center;gap:10px;}
+.fz-label{font-size:11px;color:var(--sft);flex-shrink:0;width:28px;}
+.fz-slider{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:var(--b2);outline:none;cursor:pointer;}
+.fz-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--a);cursor:pointer;}
+.fz-preview{font-size:13px;font-weight:700;color:var(--a2);flex-shrink:0;width:36px;text-align:right;font-family:"Fira Code",monospace;}
+.color-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.color-swatch{height:44px;border-radius:var(--r2);cursor:pointer;border:2.5px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;}
+.color-swatch.on{border-color:#fff;box-shadow:0 0 0 2px var(--a);}
+.color-swatch:active{transform:scale(.93);}
+/* Import smart */
+.imp-change-row{display:flex;align-items:flex-start;gap:6px;padding:6px 8px;background:var(--s2);border-radius:6px;margin-bottom:4px;font-size:10px;}
+.imp-change-field{font-weight:800;color:var(--mut);font-size:9px;text-transform:uppercase;min-width:54px;flex-shrink:0;}
+.imp-change-old{color:#f87171;text-decoration:line-through;flex:1;word-break:break-word;}
+.imp-change-new{color:#4ade80;flex:1;word-break:break-word;}
+.imp-upd-card{background:var(--card);border:1.5px solid var(--org);border-radius:var(--r2);padding:11px 12px;margin-bottom:8px;}
+.imp-upd-name{font-size:12px;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:7px;}
+.imp-upd-actions{display:flex;gap:6px;margin-top:8px;}
+.imp-upd-btn-y{flex:1;padding:8px;background:var(--grn);color:#000;border:none;border-radius:var(--r3);font-size:10px;font-weight:800;cursor:pointer;font-family:var(--fnt);}
+.imp-upd-btn-n{flex:1;padding:8px;background:var(--s2);color:var(--sft);border:1px solid var(--b2);border-radius:var(--r3);font-size:10px;font-weight:800;cursor:pointer;font-family:var(--fnt);}
+.imp-apply-all-btn{width:100%;margin-top:8px;padding:11px;background:var(--lg);color:#fff;border:none;border-radius:var(--r2);font-size:12px;font-weight:800;cursor:pointer;font-family:var(--fnt);}
+
+/* PWA offline banner */
+.pwa-offline{display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#ef4444;color:#fff;text-align:center;font-size:11px;font-weight:800;padding:6px;letter-spacing:.3px;}
+.pwa-offline.show{display:block;}
+/* PWA install banner */
+.pwa-install-bar{display:none;position:fixed;bottom:calc(var(--nh,64px) + env(safe-area-inset-bottom,20px) + 8px);left:12px;right:12px;z-index:500;background:var(--lg);border-radius:14px;padding:11px 14px;align-items:center;gap:10px;box-shadow:0 8px 28px rgba(0,0,0,.4);}
+.pwa-install-bar.show{display:flex;}
+.pwa-install-txt{flex:1;font-size:12px;font-weight:700;color:#fff;line-height:1.3;}
+.pwa-install-btn{background:#fff;color:#1d4ed8;border:none;border-radius:9px;padding:8px 14px;font-size:11px;font-weight:800;cursor:pointer;font-family:var(--fnt);white-space:nowrap;}
+.pwa-install-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:16px;cursor:pointer;padding:2px 6px;}
 </style>
-<link rel="manifest" href="/manifest.json"/>
-<link rel="apple-touch-icon" href="/icon-192.png"/>
-<meta name="mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('sw.js')
+      .then(r=>console.log('SW registrado:',r.scope))
+      .catch(e=>console.log('SW error:',e));
+  });
+}
+</script>
 </head>
 <body>
 <div class="hdr">
@@ -472,6 +523,7 @@ body{display:flex;flex-direction:column;}
   </div>
   <div class="hdr-right">
     <div class="hdr-badge" id="hdr-n">0</div>
+    <div class="hdr-btn" id="appear-btn" title="Apariencia">🔡</div>
     <div class="hdr-btn" id="theme-btn" title="Cambiar tema">🎨</div>
   </div>
 </div>
@@ -542,6 +594,12 @@ body{display:flex;flex-direction:column;}
       <button class="srch-mic" onclick="voiceSrch()">🎙</button>
     </div>
     <div class="sf-pills" id="sf-pills"></div>
+    <!-- v13: barra eliminar en búsqueda -->
+    <div class="srch-del-bar" id="srch-del-bar" style="display:none">
+      <span class="srch-sel-info" id="srch-sel-info">0 seleccionados</span>
+      <button class="srch-del-btn" id="srch-del-sel-btn" disabled onclick="delSrchSel()">🗑️ Eliminar</button>
+      <button class="srch-del-all-btn" onclick="delSrchAll()">🗑️ Todos</button>
+    </div>
     <div id="srch-idle-wrap">
       <div id="srch-recents-sec"></div>
       <div class="sec-row" style="margin-top:14px"><span class="sec-lbl">Acceso rápido</span></div>
@@ -793,6 +851,41 @@ body{display:flex;flex-direction:column;}
   <p style="font-size:11px;color:var(--mut);text-align:center;margin-bottom:14px">El tema se guarda automáticamente</p>
   <div class="theme-g" id="theme-g"></div>
 </div>
+<!-- SHEET: APARIENCIA v13 -->
+<div class="sheet" id="sh-appear">
+  <div class="hdl"></div>
+  <div class="sh-title">🔡 Apariencia</div>
+  <div class="app-section">
+    <div class="app-section-title">📏 Tamaño de fuente</div>
+    <div class="fz-slider-wrap">
+      <span class="fz-label" style="font-size:10px">A</span>
+      <input type="range" class="fz-slider" id="fz-slider" min="80" max="130" step="5" value="100" oninput="applyFontSize(this.value)"/>
+      <span class="fz-label" style="font-size:15px">A</span>
+      <span class="fz-preview" id="fz-preview">100%</span>
+    </div>
+    <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
+      <button class="sort-chip" onclick="applyFontSize(85);document.getElementById('fz-slider').value=85">Pequeña</button>
+      <button class="sort-chip" onclick="applyFontSize(100);document.getElementById('fz-slider').value=100">Normal</button>
+      <button class="sort-chip" onclick="applyFontSize(115);document.getElementById('fz-slider').value=115">Grande</button>
+      <button class="sort-chip" onclick="applyFontSize(130);document.getElementById('fz-slider').value=130">Muy grande</button>
+    </div>
+  </div>
+  <div class="app-section">
+    <div class="app-section-title">🎨 Color de acento</div>
+    <div class="color-grid" id="accent-grid"></div>
+  </div>
+  <div class="app-section">
+    <div class="app-section-title">🌑 Brillo de fondo</div>
+    <div class="fz-slider-wrap">
+      <span class="fz-label">🌑</span>
+      <input type="range" class="fz-slider" id="bg-bright-slider" min="0" max="100" step="10" value="0" oninput="applyBgBright(this.value)"/>
+      <span class="fz-label">☀️</span>
+      <span class="fz-preview" id="bg-bright-preview">0%</span>
+    </div>
+  </div>
+  <button type="button" class="btn btn-s mt8" onclick="resetAppearance()" style="color:var(--red)">🔄 Restablecer</button>
+  <button type="button" class="btn btn-s mt8" onclick="closeSheet('sh-appear')">Cerrar</button>
+</div>
 <!-- CONFIRM -->
 <div class="conf-wrap" id="conf">
   <div class="conf-box">
@@ -927,6 +1020,9 @@ document.getElementById('modal-bg').addEventListener('click',function(e){
 });
 document.getElementById('theme-btn').addEventListener('click',function(e){
   e.stopPropagation();renderThemeG();openSheet('sh-theme');
+});
+document.getElementById('appear-btn').addEventListener('click',function(e){
+  e.stopPropagation();renderAppearSheet();openSheet('sh-appear');
 });
 
 /* ===== NAVIGATION ===== */
@@ -1603,7 +1699,7 @@ function setSFP(v){
   else if(q) execSrch(q);
   else showSrchIdle();
 }
-function initSrch(){renderSFPills();showSrchIdle();}
+function initSrch(){if(typeof srchSel==='undefined')window.srchSel=new Set();else srchSel=new Set();if(typeof srchCurrentItems==='undefined')window.srchCurrentItems=[];else srchCurrentItems=[];renderSFPills();showSrchIdle();}
 function onSI(){
   const q=document.getElementById('sq').value||'';
   document.getElementById('sq-clr').style.display=q?'flex':'none';
@@ -1615,9 +1711,11 @@ function onSF(){}
 function onSB(){}
 function clrSrch(){document.getElementById('sq').value='';document.getElementById('sq-clr').style.display='none';showSrchIdle();}
 function showSrchIdle(){
+  srchSel=new Set();srchCurrentItems=[];
   document.getElementById('srch-idle-wrap').style.display='block';
   document.getElementById('srch-active-wrap').style.display='none';
   document.getElementById('srch-nores-wrap').style.display='none';
+  const _db=document.getElementById('srch-del-bar');if(_db)_db.style.display='none';
   renderSrchRecs();renderQA();
 }
 function saveRec2(q){
@@ -1704,9 +1802,15 @@ function execSrch(q,forceShow=false){
   showResults(results.map(x=>x.r),q,q,results);
 }
 function showResults(items,title,q,meta){
+  srchCurrentItems=items.slice();
+  srchSel=new Set();
   document.getElementById('srch-idle-wrap').style.display='none';
   document.getElementById('srch-nores-wrap').style.display='none';
   document.getElementById('srch-active-wrap').style.display='block';
+  // show delete bar
+  const _db=document.getElementById('srch-del-bar');
+  if(_db)_db.style.display='flex';
+  _updSrchBar();
   const dups=items.filter(r=>r.dup).length;
   document.getElementById('srch-stats').innerHTML=`<span><strong>${items.length}</strong> resultado${items.length!==1?'s':''} ${q?'para "'+q+'"':''}</span>
     <div style="display:flex;gap:5px">${dups?`<span style="font-size:9px;font-weight:800;background:#2a0e0e;color:var(--red);padding:2px 7px;border-radius:8px">⚠️ ${dups}</span>`:''}<span style="font-size:9px;font-weight:800;background:var(--s2);color:var(--sft);padding:2px 7px;border-radius:8px">${title||sfFilter}</span></div>`;
@@ -1715,34 +1819,40 @@ function showResults(items,title,q,meta){
     const p=pg(r.tipo),sc=SC[r.estatus]||'bdg-def';
     const mm=meta?meta[i]:null;
     const mfld=mm?.mf,mval=mm?.mv;
-    return `<div class="rec${r.dup?' dup':''}">
-      <div class="rec-bar" style="background:${p.clr}30;border-bottom:2px solid ${p.clr}50"></div>
-      <div class="rec-body" onclick="openDet(${r.id})">
-        <div class="rec-top">
-          <div class="av" style="background:${p.bg};color:${p.clr}">${ini(r.nombre)}</div>
-          <div class="rec-meta">
-            <div class="rec-name">${hl(r.nombre)}</div>
-            <div class="rec-folio">${hl(r.folio)} · ID ${r.id}</div>
+    const sel=srchSel.has(r.id);
+    return `<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+      <div class="srch-chk${sel?' on':''}" id="srchchk-${r.id}" onclick="togSrchSel(${r.id},event)">${sel?'✓':''}</div>
+      <div class="rec${r.dup?' dup':''}" style="flex:1;margin-bottom:0">
+        <div class="rec-bar" style="background:${p.clr}30;border-bottom:2px solid ${p.clr}50"></div>
+        <div class="rec-body" onclick="openDet(${r.id})">
+          <div class="rec-top">
+            <div class="av" style="background:${p.bg};color:${p.clr}">${ini(r.nombre)}</div>
+            <div class="rec-meta">
+              <div class="rec-name">${hl(r.nombre)}</div>
+              <div class="rec-folio">${hl(r.folio)} · ID ${r.id}</div>
+            </div>
+            ${r.dup?'<span class="dup-tag">⚠️</span>':''}
           </div>
-          ${r.dup?'<span class="dup-tag">⚠️</span>':''}
+          <div class="bdgs">
+            <span class="bdg" style="background:${p.bg};color:${p.clr}">${p.ico} ${r.tipo}</span>
+            <span class="bdg ${sc}">${r.estatus}</span>
+          </div>
+          ${mfld&&mval?`<div style="padding:5px 0;font-size:10px;color:var(--sft)"><span style="font-size:9px;font-weight:800;color:var(--mut);text-transform:uppercase;margin-right:5px">${FLD_LBL[mfld]||mfld}</span>${hl(mval)}</div>`:''}
         </div>
-        <div class="bdgs">
-          <span class="bdg" style="background:${p.bg};color:${p.clr}">${p.ico} ${r.tipo}</span>
-          <span class="bdg ${sc}">${r.estatus}</span>
+        <div class="rec-acts">
+          <button class="ra ${(VIS[r.visita]||VIS['Pendiente']).cls}" onclick="cycleVis(${r.id},event)"><span class="ri2">${(VIS[r.visita]||VIS['Pendiente']).ico}</span> ${(VIS[r.visita]||VIS['Pendiente']).lbl}</button>
+          <button class="ra ${(USO[r.uso]||USO['Mexico']).cls}" onclick="cycleUso(${r.id},event)"><span class="ri2">${(USO[r.uso]||USO['Mexico']).ico}</span> ${(USO[r.uso]||USO['Mexico']).lbl}</button>
         </div>
-        ${mfld&&mval?`<div style="padding:5px 0;font-size:10px;color:var(--sft)"><span style="font-size:9px;font-weight:800;color:var(--mut);text-transform:uppercase;margin-right:5px">${FLD_LBL[mfld]||mfld}</span>${hl(mval)}</div>`:''}
-      </div>
-      <div class="rec-acts">
-        <button class="ra ${(VIS[r.visita]||VIS['Pendiente']).cls}" onclick="cycleVis(${r.id},event)"><span class="ri2">${(VIS[r.visita]||VIS['Pendiente']).ico}</span> ${(VIS[r.visita]||VIS['Pendiente']).lbl}</button>
-        <button class="ra ${(USO[r.uso]||USO['Mexico']).cls}" onclick="cycleUso(${r.id},event)"><span class="ri2">${(USO[r.uso]||USO['Mexico']).ico}</span> ${(USO[r.uso]||USO['Mexico']).lbl}</button>
       </div>
     </div>`;
   }).join('');
 }
 function showNoRes(q){
+  srchCurrentItems=[];srchSel=new Set();
   document.getElementById('srch-idle-wrap').style.display='none';
   document.getElementById('srch-active-wrap').style.display='none';
   document.getElementById('srch-nores-wrap').style.display='block';
+  const _db=document.getElementById('srch-del-bar');if(_db)_db.style.display='none';
   document.getElementById('nores-t').textContent=`Sin resultados para "${q}"`;
   document.getElementById('nores-s').textContent='Prueba con otro término o quita los filtros.';
 }
@@ -1966,13 +2076,16 @@ function handleImp(ev){
   ev.target.value='';
 }
 function procCSV(text,fname,out){
-  const lines=text.split(/\r?\n/).filter(l=>l.trim());if(lines.length<2){out.innerHTML='<div class="imp-res bad">⚠️ Archivo vacío</div>';return;}
+  const lines=text.split(/\r?\n/).filter(l=>l.trim());
+  if(lines.length<2){out.innerHTML='<div class="imp-res bad">⚠️ Archivo vacío</div>';return;}
   const sep=lines[0].includes(';')?';':',';
   const hdrs=lines[0].split(sep).map(h=>h.trim().toLowerCase().replace(/[^a-z0-9]/gi,''));
   const FM={folio:['folio','id','clave'],nombre:['nombre','nombrecompleto'],tipo:['tipo','programa'],tel:['telefono','tel'],dom:['domicilio','calle'],num:['numero','num'],col:['colonia','municipio'],estatus:['estatus','status'],obs:['observacion','notas']};
   const ci={};Object.keys(FM).forEach(f=>{for(const a of FM[f]){const i=hdrs.findIndex(h=>h.includes(a));if(i>=0){ci[f]=i;break;}}});
   const gc=(cells,f)=>{const i=ci[f];return i>=0&&i<cells.length?cells[i].trim().replace(/^"|"$/g,''):'';};
-  const exF=new Set(R.map(r=>r.folio)),newF=new Set();let added=0,dups=[],existing=[];
+  const exFolios=new Map(R.map(r=>[r.folio,r]));
+  const newF=new Set();
+  let added=0,inFileDups=[],toUpdate=[],toAdd=[];
   lines.slice(1).filter(l=>l.trim()).forEach((line,idx)=>{
     const cells=line.split(sep);
     const folio=(gc(cells,'folio')||`IMP-${idx+1}`).toUpperCase();
@@ -1980,15 +2093,74 @@ function procCSV(text,fname,out){
     const tipoR=gc(cells,'tipo').toUpperCase();
     const tipo=['PAM','PCD','JCF','MT','BBJ'].includes(tipoR)?tipoR:'PAM';
     if(!nombre)return;
-    const rec={id:nxtId()+added,folio,nombre,tipo,tel:gc(cells,'tel'),dom:gc(cells,'dom'),num:gc(cells,'num'),col:gc(cells,'col'),visita:'Pendiente',uso:'Mexico',estatus:gc(cells,'estatus')||'Activo',obs:gc(cells,'obs'),fecha:today(),ult:'',dup:false};
-    if(exF.has(folio)){existing.push(rec);return;}
-    if(newF.has(folio)){dups.push(rec);return;}
-    newF.add(folio);R.push(rec);added++;
+    const incoming={folio,nombre,tipo,tel:gc(cells,'tel'),dom:gc(cells,'dom'),num:gc(cells,'num'),col:gc(cells,'col'),estatus:gc(cells,'estatus')||'Activo',obs:gc(cells,'obs')};
+    if(exFolios.has(folio)){
+      // Detect field-by-field changes
+      const exist=exFolios.get(folio);
+      const LABELS={nombre:'Nombre',tel:'Teléfono',dom:'Domicilio',num:'Número',col:'Colonia',estatus:'Estatus',obs:'Obs.',tipo:'Programa'};
+      const changes=[];
+      Object.keys(LABELS).forEach(k=>{
+        const ov=(exist[k]||'').trim(),nv=(incoming[k]||'').trim();
+        if(ov!==nv&&nv)changes.push({f:k,lbl:LABELS[k],old:ov,nw:nv});
+      });
+      if(changes.length)toUpdate.push({exist,incoming,changes});
+      return;
+    }
+    if(newF.has(folio)){inFileDups.push(incoming);return;}
+    newF.add(folio);toAdd.push(incoming);
+  });
+  // Add new records
+  toAdd.forEach(rec=>{
+    R.push({id:nxtId()+added,folio:rec.folio,nombre:rec.nombre,tipo:rec.tipo,tel:rec.tel,dom:rec.dom,num:rec.num,col:rec.col,visita:'Pendiente',uso:'Mexico',estatus:rec.estatus,obs:rec.obs,fecha:today(),ult:'',dup:false});
+    added++;
   });
   detectDups();svR();upHdr();
-  let html=`<div class="imp-res ok"><b>📂 ${fname}</b><br><span style="color:var(--grn);font-size:14px;font-weight:800">✅ ${added} registros importados</span><br>${dups.length?`<span style="color:var(--red)">⚠️ ${dups.length} duplicados en archivo</span><br>`:''}${existing.length?`<span style="color:var(--org)">🔶 ${existing.length} ya existían</span>`:''}</div>`;
-  if(dups.length)html+=`<div class="sh2" style="margin-top:10px;color:var(--red)">Duplicados</div>`+dups.map(r=>`<div class="imp-res bad"><b>${r.nombre}</b> · ${r.folio}</div>`).join('');
-  out.innerHTML=html;renderInicio();snack(`✅ ${added} registros importados`,'✅');
+  // Build result HTML
+  let html=`<div class="imp-res ok"><b>📂 ${fname}</b><br>
+    <span style="color:var(--grn);font-size:13px;font-weight:800">✅ ${added} nuevos importados</span><br>
+    ${toUpdate.length?`<span style="color:var(--org);font-size:12px;font-weight:700">🔄 ${toUpdate.length} con cambios detectados</span><br>`:''}
+    ${inFileDups.length?`<span style="color:var(--red);font-size:11px">⚠️ ${inFileDups.length} duplicados en el archivo</span>`:''}
+  </div>`;
+  if(toUpdate.length){
+    window._impUpd=toUpdate.map(u=>({...u}));
+    html+=`<button class="imp-apply-all-btn" onclick="impApplyAll()">✅ Aplicar TODOS los cambios (${toUpdate.length})</button>`;
+    toUpdate.forEach((upd,i)=>{
+      html+=`<div class="imp-upd-card" id="impcard-${i}">
+        <div class="imp-upd-name">${upd.exist.nombre} <span style="font-size:9px;color:var(--mut);font-family:'Fira Code',monospace">${upd.exist.folio}</span></div>
+        ${upd.changes.map(c=>`<div class="imp-change-row">
+          <span class="imp-change-field">${c.lbl}</span>
+          <span class="imp-change-old">${c.old||'—'}</span>
+          <span style="color:var(--mut);padding:0 3px;flex-shrink:0">→</span>
+          <span class="imp-change-new">${c.nw}</span>
+        </div>`).join('')}
+        <div class="imp-upd-actions">
+          <button class="imp-upd-btn-y" onclick="impApplyOne(${i})">✅ Aplicar</button>
+          <button class="imp-upd-btn-n" onclick="impSkipOne(${i})">✗ Ignorar</button>
+        </div>
+      </div>`;
+    });
+  }
+  if(inFileDups.length)html+=`<div class="sh2" style="margin-top:10px;color:var(--red)">Duplicados en archivo</div>`+inFileDups.map(r=>`<div class="imp-res bad"><b>${r.nombre}</b> · ${r.folio}</div>`).join('');
+  out.innerHTML=html;renderInicio();snack(`✅ ${added} importados${toUpdate.length?' · 🔄 '+toUpdate.length+' cambios':''}`, '✅');
+}
+function impApplyOne(i){
+  const upd=window._impUpd&&window._impUpd[i];if(!upd||upd._done)return;
+  const r=R.find(x=>x.folio===upd.exist.folio);
+  if(r){const chLog=upd.changes.map(c=>`${c.lbl}: "${c.old||'—'}"→"${c.nw}"`).join(' | ');upd.changes.forEach(c=>{r[c.f]=c.nw;});r.ult=nowStr();H.push({id:Date.now()+i,folio:r.folio,nombre:r.nombre,cambios:chLog,motivo:'Importación CSV',resp:'Sistema',fecha:nowStr(),tipo:'edit'});svH();svR();}
+  upd._done=true;
+  const card=document.getElementById('impcard-'+i);
+  if(card){card.style.opacity='.45';card.style.pointerEvents='none';card.querySelector('.imp-upd-actions').innerHTML='<span style="color:var(--grn);font-size:11px;font-weight:800">✅ Aplicado</span>';}
+  snack(`✅ ${upd.exist.nombre.split(' ')[0]} actualizado`,'✅');
+}
+function impSkipOne(i){
+  if(window._impUpd&&window._impUpd[i])window._impUpd[i]._done=true;
+  const card=document.getElementById('impcard-'+i);
+  if(card){card.style.opacity='.3';card.style.pointerEvents='none';card.querySelector('.imp-upd-actions').innerHTML='<span style="color:var(--mut);font-size:11px">✗ Ignorado</span>';}
+}
+function impApplyAll(){
+  if(!window._impUpd)return;let n=0;
+  window._impUpd.forEach((upd,i)=>{if(!upd||upd._done)return;impApplyOne(i);n++;});
+  renderInicio();snack(`✅ ${n} registros actualizados`,'✅');
 }
 
 /* ===== DUP MANAGER ===== */
@@ -2043,6 +2215,112 @@ function delDupOne(id){const r=R.find(x=>x.id===id);conf2('Eliminar duplicado',`
 function delSelected(){if(!dupSel.size)return;const n=dupSel.size;conf2('Eliminar seleccionados','¿Eliminar '+n+' registro(s)? No se puede deshacer.',()=>{dupSel.forEach(id=>{const r=R.find(x=>x.id===id);if(r)H.push({id:Date.now()+id,folio:r.folio,nombre:r.nombre,cambios:'Duplicado eliminado',motivo:'Eliminación masiva',resp:'Usuario',fecha:nowStr(),tipo:'del'});});svH();R=R.filter(x=>!dupSel.has(x.id));dupSel.clear();detectDups();svR();upHdr();renderDupMgr();renderInicio();snack('🗑️ '+n+' duplicados eliminados','🗑️');},'Eliminar '+n);}
 function confDelAllDups(){detectDups();const dups=R.filter(r=>r.dup);if(!dups.length)return;conf2('Eliminar TODOS',`¿Eliminar ${dups.length} duplicados?`,()=>{dups.forEach(r=>H.push({id:Date.now()+r.id,folio:r.folio,nombre:r.nombre,cambios:'Dup eliminado (masiva)',motivo:'Eliminar todos',resp:'Usuario',fecha:nowStr(),tipo:'del'}));svH();const ids=new Set(dups.map(r=>r.id));R=R.filter(r=>!ids.has(r.id));dupSel.clear();detectDups();svR();upHdr();closeAllSheets();renderInicio();snack(`🗑️ ${dups.length} duplicados eliminados`,'🗑️');},`Eliminar ${dups.length}`);}
 
+
+/* ===== v13: APARIENCIA ===== */
+const ACCENT_COLORS=[
+  {name:'Azul',    val:'#3b82f6',grad:'linear-gradient(135deg,#1d4ed8,#6366f1)'},
+  {name:'Verde',   val:'#10b981',grad:'linear-gradient(135deg,#065f46,#10b981)'},
+  {name:'Ámbar',   val:'#f59e0b',grad:'linear-gradient(135deg,#92400e,#f59e0b)'},
+  {name:'Rosa',    val:'#ec4899',grad:'linear-gradient(135deg,#9d174d,#ec4899)'},
+  {name:'Violeta', val:'#8b5cf6',grad:'linear-gradient(135deg,#3730a3,#8b5cf6)'},
+  {name:'Rojo',    val:'#ef4444',grad:'linear-gradient(135deg,#7f1d1d,#ef4444)'},
+  {name:'Cyan',    val:'#06b6d4',grad:'linear-gradient(135deg,#164e63,#06b6d4)'},
+  {name:'Naranja', val:'#f97316',grad:'linear-gradient(135deg,#7c2d12,#f97316)'},
+];
+let curAccent=localStorage.getItem('px_accent')||null;
+let curFontSize=parseInt(localStorage.getItem('px_fz')||'100');
+let curBgBright=parseInt(localStorage.getItem('px_bgbright')||'0');
+// restore on load
+(function(){
+  if(curFontSize!==100)document.body.style.fontSize=(curFontSize/100)+'rem';
+  const sa=localStorage.getItem('px_accent'),sg=localStorage.getItem('px_accent_grad');
+  if(sa){document.documentElement.style.setProperty('--a',sa);document.documentElement.style.setProperty('--a2',sa+'cc');if(sg)document.documentElement.style.setProperty('--lg',sg);}
+  if(curBgBright>0)document.documentElement.style.setProperty('--bg-bright-overlay',`rgba(255,255,255,${curBgBright/400})`);
+})();
+function applyFontSize(val){
+  curFontSize=parseInt(val);
+  document.body.style.fontSize=(curFontSize/100)+'rem';
+  const fp=document.getElementById('fz-preview');if(fp)fp.textContent=curFontSize+'%';
+  localStorage.setItem('px_fz',curFontSize);
+  snack('🔡 Fuente: '+curFontSize+'%','🔡');
+}
+function applyBgBright(val){
+  curBgBright=parseInt(val);
+  const bp=document.getElementById('bg-bright-preview');if(bp)bp.textContent=val+'%';
+  if(curBgBright===0)document.documentElement.style.removeProperty('--bg-bright-overlay');
+  else document.documentElement.style.setProperty('--bg-bright-overlay',`rgba(255,255,255,${curBgBright/400})`);
+  localStorage.setItem('px_bgbright',curBgBright);
+}
+function applyAccent(i){
+  const c=ACCENT_COLORS[i];if(!c)return;
+  curAccent=c.val;
+  localStorage.setItem('px_accent',c.val);localStorage.setItem('px_accent_grad',c.grad);
+  document.documentElement.style.setProperty('--a',c.val);
+  document.documentElement.style.setProperty('--a2',c.val+'cc');
+  document.documentElement.style.setProperty('--lg',c.grad);
+  renderAppearSheet();snack('🎨 '+c.name,'🎨');
+}
+function resetAppearance(){
+  curFontSize=100;curBgBright=0;curAccent=null;
+  localStorage.removeItem('px_fz');localStorage.removeItem('px_bgbright');
+  localStorage.removeItem('px_accent');localStorage.removeItem('px_accent_grad');
+  document.body.style.fontSize='';
+  ['--a','--a2','--lg','--bg-bright-overlay'].forEach(p=>document.documentElement.style.removeProperty(p));
+  renderAppearSheet();snack('🔄 Apariencia restablecida','🔄');
+}
+function renderAppearSheet(){
+  const grid=document.getElementById('accent-grid');if(!grid)return;
+  grid.innerHTML=ACCENT_COLORS.map((c,i)=>`<div class="color-swatch${curAccent===c.val?' on':''}" style="background:${c.grad}" onclick="applyAccent(${i})" title="${c.name}">${curAccent===c.val?'✓':''}</div>`).join('');
+  const sl=document.getElementById('fz-slider');if(sl)sl.value=curFontSize;
+  const fp=document.getElementById('fz-preview');if(fp)fp.textContent=curFontSize+'%';
+  const bs=document.getElementById('bg-bright-slider');if(bs)bs.value=curBgBright;
+  const bp=document.getElementById('bg-bright-preview');if(bp)bp.textContent=curBgBright+'%';
+}
+
+/* ===== v13: ELIMINAR DESDE BÚSQUEDA ===== */
+let srchSel=new Set();
+let srchCurrentItems=[];
+function _updSrchBar(){
+  const bar=document.getElementById('srch-del-bar');if(!bar)return;
+  const n=srchSel.size;
+  const info=document.getElementById('srch-sel-info');
+  const btn=document.getElementById('srch-del-sel-btn');
+  if(info)info.textContent=n?`${n} seleccionado${n>1?'s':''}`:srchCurrentItems.length?`${srchCurrentItems.length} resultado${srchCurrentItems.length!==1?'s':''}`:' ';
+  if(btn){btn.disabled=!n;btn.textContent=n?`🗑️ Eliminar (${n})`:'🗑️ Eliminar';}
+}
+function togSrchSel(id,e){
+  e.stopPropagation();
+  if(srchSel.has(id))srchSel.delete(id);else srchSel.add(id);
+  const chk=document.getElementById('srchchk-'+id);
+  if(chk){chk.classList.toggle('on',srchSel.has(id));chk.textContent=srchSel.has(id)?'✓':'';}
+  _updSrchBar();
+}
+function delSrchSel(){
+  if(!srchSel.size)return;
+  const ids=new Set(srchSel);const n=ids.size;
+  conf2('Eliminar seleccionados',`¿Eliminar ${n} beneficiario${n>1?'s':''}? No se puede deshacer.`,()=>{
+    ids.forEach(id=>{const r=R.find(x=>x.id===id);if(r)H.push({id:Date.now()+id,folio:r.folio,nombre:r.nombre,cambios:'Eliminado desde búsqueda',motivo:'Manual',resp:'Usuario',fecha:nowStr(),tipo:'del'});});
+    svH();R=R.filter(x=>!ids.has(x.id));
+    srchSel=new Set();srchCurrentItems=srchCurrentItems.filter(r=>!ids.has(r.id));
+    detectDups();svR();upHdr();renderInicio();
+    onSI();
+    snack(`🗑️ ${n} eliminado${n>1?'s':''}`,'🗑️');
+  },'Eliminar '+n);
+}
+function delSrchAll(){
+  if(!srchCurrentItems.length)return;
+  const items=srchCurrentItems.slice();const n=items.length;
+  conf2('Eliminar TODOS',`¿Eliminar ${n} beneficiario${n>1?'s':''} de la búsqueda actual?`,()=>{
+    const ids=new Set(items.map(r=>r.id));
+    ids.forEach(id=>{const r=R.find(x=>x.id===id);if(r)H.push({id:Date.now()+id,folio:r.folio,nombre:r.nombre,cambios:'Eliminado (masivo)',motivo:'Búsqueda masiva',resp:'Usuario',fecha:nowStr(),tipo:'del'});});
+    svH();R=R.filter(x=>!ids.has(x.id));
+    srchSel=new Set();srchCurrentItems=[];
+    detectDups();svR();upHdr();renderInicio();
+    clrSrch();
+    snack(`🗑️ ${n} eliminado${n>1?'s':''}`,'🗑️');
+  },'Eliminar '+n);
+}
+
 /* ===== INIT ===== */
 // Load data from v9 keys if v10 is empty
 (function migrateData(){
@@ -2058,13 +2336,37 @@ detectDups();upHdr();selDay=today();
 renderInicio();renderChips();renderSFPills();
 </script>
 
+<div class="pwa-offline" id="pwa-offline">📡 Sin conexión — La app funciona sin internet</div>
+<div class="pwa-install-bar" id="pwa-install-bar">
+  <div class="pwa-install-txt">📲 Instala Pensionados MX<br><span style="opacity:.8;font-size:10px">Acceso rápido desde tu pantalla</span></div>
+  <button class="pwa-install-btn" id="pwa-install-btn">Instalar</button>
+  <button class="pwa-install-close" onclick="hidePWABar()">✕</button>
+</div>
 <script>
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('/sw.js')
-      .then(r=>console.log('SW registrado'))
-      .catch(e=>console.log('SW error',e));
-  });
+// Offline detection
+window.addEventListener('online',  ()=>document.getElementById('pwa-offline').classList.remove('show'));
+window.addEventListener('offline', ()=>document.getElementById('pwa-offline').classList.add('show'));
+if(!navigator.onLine)document.getElementById('pwa-offline').classList.add('show');
+
+// Install prompt
+let _deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();_deferredPrompt=e;
+  if(!localStorage.getItem('pwa_install_dismissed'))
+    setTimeout(()=>document.getElementById('pwa-install-bar').classList.add('show'),3000);
+});
+document.getElementById('pwa-install-btn').addEventListener('click',async()=>{
+  if(!_deferredPrompt)return;
+  _deferredPrompt.prompt();
+  const{outcome}=await _deferredPrompt.userChoice;
+  if(outcome==='accepted')snack('✅ App instalada correctamente','✅');
+  _deferredPrompt=null;
+  hidePWABar();
+});
+window.addEventListener('appinstalled',()=>{hidePWABar();snack('✅ App instalada','✅');});
+function hidePWABar(){
+  document.getElementById('pwa-install-bar').classList.remove('show');
+  localStorage.setItem('pwa_install_dismissed','1');
 }
 </script>
 </body>

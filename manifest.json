@@ -1,12 +1,17 @@
 {
   "name": "Pensionados MX",
   "short_name": "Pensionados",
-  "description": "Gestión de beneficiarios de programas sociales",
-  "start_url": "/",
+  "description": "Sistema de gestión de beneficiarios de programas sociales",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#05090f",
-  "theme_color": "#3b82f6",
   "orientation": "portrait",
+  "background_color": "#05090f",
+  "theme_color": "#05090f",
+  "lang": "es-MX",
+  "categories": [
+    "productivity",
+    "utilities"
+  ],
   "icons": [
     {
       "src": "icon-192.png",
@@ -19,6 +24,18 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Búsqueda",
+      "url": "./index.html#buscar",
+      "description": "Buscar beneficiarios"
+    },
+    {
+      "name": "Nuevo registro",
+      "url": "./index.html#nuevo",
+      "description": "Agregar beneficiario"
     }
   ]
 }
