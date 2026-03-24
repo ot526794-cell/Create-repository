@@ -244,13 +244,7 @@ body{display:flex;flex-direction:column;}
 [data-theme=arctic] .stat-row3 .scard-n{font-weight:800;}
 [data-theme=arctic] .hdr{border-bottom:1px solid #cbd5e1;}
 [data-theme=arctic] .home-srch{background:#fff;border-color:#cbd5e1;}
-/* Donut inicio */
-.home-donut-wrap{background:var(--card);border:1px solid var(--b1);border-radius:var(--r);padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:14px;}
-.home-donut-legend{flex:1;display:flex;flex-direction:column;gap:5px;}
-.hdl-item{display:flex;align-items:center;gap:6px;font-size:10px;}
-.hdl-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
-.hdl-lbl{flex:1;color:var(--t2);}
-.hdl-n{font-family:'Fira Code',monospace;font-size:10px;color:var(--sft);}
+/* Donut removida v18 */
 
 .sec-toggle-btn{display:flex;align-items:center;justify-content:space-between;width:100%;background:var(--s2);border:1.5px solid var(--b2);border-radius:var(--r2);padding:9px 13px;cursor:pointer;font-size:11px;font-weight:700;color:var(--sft);margin-bottom:8px;transition:.15s;}
 .sec-toggle-btn:active{background:var(--b1);}
@@ -278,7 +272,7 @@ body{display:flex;flex-direction:column;}
 .rec-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 .av{width:42px;height:42px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;}
 .rec-meta{flex:1;min-width:0;}
-.rec-name{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rec-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.3px;}
 .rec-folio{font-size:11px;font-family:'Fira Code',monospace;color:var(--sft);margin-top:2px;}
 .dup-tag{background:var(--red);color:#fff;font-size:9px;font-weight:800;border-radius:4px;padding:2px 6px;flex-shrink:0;}
 .bdgs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;}
@@ -700,6 +694,34 @@ body{display:flex;flex-direction:column;}
 [data-theme=arctic] .alert-no-visit,[data-theme=campo] .alert-no-visit{background:#fff5f5;border-color:#dc2626;}
 [data-theme=arctic] .alert-ico,[data-theme=campo] .alert-ico{background:#fee2e2;}
 [data-theme=arctic] .alert-names span,[data-theme=campo] .alert-names span{background:#fecaca;}
+
+/* ── v18: TARJETAS COMPACTAS TIPO LISTA ── */
+.rec{background:var(--card);border:none;border-radius:0;overflow:hidden;box-shadow:none;border-bottom:1px solid var(--b1);}
+.rec:first-child{border-radius:var(--r) var(--r) 0 0;}
+.rec:last-child{border-radius:0 0 var(--r) var(--r);border-bottom:none;}
+.recs{background:var(--card);border-radius:var(--r);overflow:hidden;border:1px solid var(--b1);box-shadow:0 2px 12px rgba(0,0,0,.18);}
+.rec-bar{height:0;border-bottom:none;}/* ocultar barra de color superior */
+.rec-body{padding:10px 12px 8px;}
+.rec-top{margin-bottom:4px;}
+.av{width:44px;height:44px;border-radius:12px;}
+.av-photo{width:44px;height:44px;border-radius:12px;}
+/* Nombre con letter-spacing cómodo para MAYÚSCULAS */
+.rec-name{font-size:13px;font-weight:700;letter-spacing:.3px;line-height:1.2;}
+.rec-folio{font-size:10px;margin-top:1px;}
+/* Info grid 3 col más compacto */
+.rec-info{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:4px;}
+.ri{font-size:9px;}
+.ri span{font-size:8px;margin-bottom:0;}
+/* Acciones más pequeñas */
+.rec-acts{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:5px 10px 7px;border-top:1px solid var(--b1);}
+.ra{padding:6px 4px;font-size:9px;border-radius:8px;}
+/* border-left de color programa como único acento */
+.rec.est-activo{border-left:3px solid var(--grn);}
+.rec.est-inactivo{border-left:3px solid var(--mut);}
+.rec.est-pendiente{border-left:3px solid var(--amb);}
+.rec.est-baja{border-left:3px solid var(--red);}
+/* Light theme recs */
+[data-theme=arctic] .recs,[data-theme=campo] .recs{box-shadow:0 2px 12px rgba(0,0,0,.08);}
 </style>
 <script>
 if('serviceWorker' in navigator){
@@ -713,7 +735,14 @@ if('serviceWorker' in navigator){
 </head>
 <body>
 <div class="hdr">
-  <div class="hdr-logo">🏛️</div>
+  <div class="hdr-logo" style="overflow:hidden;padding:0">
+    <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a50d4"/><stop offset="100%" stop-color="#6b77ff"/></linearGradient></defs>
+      <rect width="36" height="36" rx="10" fill="url(#sg)"/>
+      <path d="M18 5 L30 10 L30 20 C30 26 24 31 18 33 C12 31 6 26 6 20 L6 10 Z" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+      <text x="18" y="22" text-anchor="middle" font-family="'Inter',sans-serif" font-size="11" font-weight="800" fill="white" letter-spacing="-0.5">PM</text>
+    </svg>
+  </div>
   <div class="hdr-text">
     <div class="hdr-title">Pensionados MX</div>
     <div class="hdr-sub" id="hdr-sub"></div>
@@ -729,7 +758,6 @@ if('serviceWorker' in navigator){
   <button class="tab" onclick="go('registros')">Registros</button>
   <button class="tab" onclick="go('buscar')">Búsqueda</button>
   <button class="tab" onclick="go('visitas')">Visitas</button>
-  <button class="tab" onclick="go('calendario')">Agenda</button>
   <button class="tab" onclick="go('estadisticas')">Stats</button>
   <button class="tab" onclick="go('descargar')">Exportar</button>
   <button class="tab" onclick="go('importar')">Importar</button>
@@ -764,17 +792,13 @@ if('serviceWorker' in navigator){
     <div class="vis-prog-wrap" id="vis-prog-wrap"></div>
     <!-- 3 stat cards: Duplicados, USA, Pendientes -->
     <div class="stat-row3" id="stats-row3"></div>
-    <!-- Gráfica donut programas -->
-    <div class="home-donut-wrap" id="home-donut-wrap"></div>
-    <!-- Accesos rápidos: vis pendientes, visitados, sin visita, estadísticas -->
-    <div class="sh2">Accesos rápidos</div>
-    <div class="quick-bar" id="quick-bar"></div>
+
+
     <!-- Programas -->
     <div class="sh2">Programas</div>
     <div class="prog-row" id="prog-row"></div>
     <div id="pend-wrap"></div>
-    <!-- SECCIONES TOGGLE -->
-    <div id="sec-toggle-area"></div>
+
     <div class="sh2">Recientes <span class="sh2-n" id="rc-n">0</span></div>
     <div class="recs" id="rec-recent"></div>
   </div>
@@ -791,7 +815,6 @@ if('serviceWorker' in navigator){
       <span class="srch-ico">⌕</span>
       <input id="sq" type="search" autocomplete="off" placeholder="Buscar beneficiario…" oninput="onSI()" onfocus="onSF()" onblur="onSB()"/>
       <button class="srch-clr" id="sq-clr" style="display:none" onclick="clrSrch()">✕</button>
-      <button class="srch-mic" onclick="voiceSrch()">🎙</button>
       <button class="srch-mic" id="srch-adv-btn" onclick="toggleSrchAdv()" title="Filtros avanzados" style="font-size:14px">⚙️</button>
     </div>
     <div class="sf-pills" id="sf-pills"></div>
@@ -880,18 +903,7 @@ if('serviceWorker' in navigator){
     <div class="sh2" id="vis-sh">Visitas</div>
     <div id="vis-list"></div>
   </div>
-  <!-- CALENDARIO -->
-  <div class="pg" id="p-calendario">
-    <div class="cal-nav">
-      <button class="cal-navbtn" onclick="prevMo()">‹</button>
-      <div class="cal-mo" id="cal-mo"></div>
-      <button class="cal-navbtn" onclick="nextMo()">›</button>
-    </div>
-    <div class="cal-g" id="cal-grid"></div>
-    <div class="sh2" id="cal-sh">Eventos</div>
-    <button class="btn btn-s" style="font-size:11px;padding:8px;margin-bottom:9px" onclick="openShEv()">＋ Agregar evento</button>
-    <div id="cal-evs"></div>
-  </div>
+
   <!-- ESTADÍSTICAS -->
   <div class="pg" id="p-estadisticas"><div id="stats-content"></div></div>
   <!-- DESCARGAR -->
@@ -957,7 +969,7 @@ if('serviceWorker' in navigator){
     <div id="hist-list"></div>
   </div>
 </div>
-<button class="fab" id="fab" onclick="openShAdd()">＋</button>
+<button class="fab" id="fab" onclick="openShAdd()" style="width:auto;border-radius:28px;padding:0 20px;gap:6px;font-size:14px"><span style="font-size:22px;line-height:1">＋</span><span style="font-size:13px;font-weight:800;letter-spacing:-.2px">Agregar</span></button>
 <div class="bnav">
   <button class="nb on" id="nb-inicio"       onclick="go('inicio')"><span class="ni">🏠</span>Inicio</button>
   <button class="nb"    id="nb-registros"    onclick="go('registros')"><span class="ni">📋</span>Lista</button>
@@ -1024,7 +1036,7 @@ if('serviceWorker' in navigator){
     <div class="fg"><label class="fl">Fecha de Nacimiento</label><input class="fi" id="e-fnac" type="date" oninput="updEdad()"/></div>
   </div>
   <div id="edad-display" style="display:none;margin:-8px 0 12px;padding:8px 12px;background:var(--s2);border-radius:var(--r3);font-size:12px;font-weight:700;color:var(--a2)"></div>
-  <div class="fg"><label class="fl">Teléfono</label><input class="fi" id="e-tel" type="tel" placeholder="492-000-0000"/></div>
+  <div class="fg"><label class="fl">Teléfono</label><input class="fi" id="e-tel" type="tel" placeholder="492-000-0000" style="font-family:'Fira Code',monospace"/></div>
   <div class="fr2">
     <div class="fg"><label class="fl">Domicilio</label><input class="fi" id="e-dom" placeholder="Calle / Av."/></div>
     <div class="fg"><label class="fl">Número</label><input class="fi" id="e-num" placeholder="123"/></div>
@@ -1077,7 +1089,6 @@ if('serviceWorker' in navigator){
       <div class="txt-color-preview" id="txt-color-preview">Vista previa del nombre</div>
     </div>
   </div>
-  <div class="fg"><label class="fl">Observaciones</label><textarea class="fta" id="e-obs" placeholder="Notas adicionales…"></textarea></div>
   <div class="fg"><label class="fl">Sección / Ruta</label><input class="fi" id="e-seccion" placeholder="Ej: 617, 618…"/></div>
   <div class="fg" id="e-reason-wrap" style="display:none">
     <label class="fl">Motivo de edición</label>
@@ -1341,7 +1352,7 @@ document.getElementById('appear-btn').addEventListener('click',function(e){
 });
 
 /* ===== NAVIGATION ===== */
-const TABS=['inicio','registros','buscar','visitas','calendario','estadisticas','descargar','importar','secciones','historial'];
+const TABS=['inicio','registros','buscar','visitas','estadisticas','descargar','importar','secciones','historial'];
 let curTab='inicio';
 function go(tab){
   curTab=tab;
@@ -1351,7 +1362,7 @@ function go(tab){
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
   const nb=document.getElementById('nb-'+tab);if(nb)nb.classList.add('on');
   document.getElementById('main').scrollTop=0;
-  const noFab=['estadisticas','descargar','historial'].includes(tab);
+  const noFab=['estadisticas','descargar','historial','secciones'].includes(tab);
   document.getElementById('fab').style.display=noFab?'none':'flex';
   render(tab);
 }
@@ -1360,7 +1371,6 @@ function render(t){
   if(t==='registros')     renderList();
   if(t==='buscar')        initSrch();
   if(t==='visitas')       renderVis();
-  if(t==='calendario')    renderCal();
   if(t==='estadisticas')  renderStats();
   if(t==='descargar')     renderDL();
   if(t==='secciones')     renderSecPg();
@@ -1446,7 +1456,7 @@ function cycleUso(id,e){
 function toggleSecciones(){
   seccionesVisible=!seccionesVisible;
   localStorage.setItem('px_sec_visible', seccionesVisible ? 'true' : 'false');
-  renderSeccionesToggle();
+  // secciones toggle en inicio desactivado
 }
 function renderSeccionesToggle(){
   const area=document.getElementById('sec-toggle-area');
@@ -1567,26 +1577,11 @@ function renderInicio(){
       <div class="scard-l">⏳ Pend.</div>
     </div>`;
 
-  // DONUT PROGRAMAS
-  const progData=Object.entries(P).map(([k,p])=>({k,p,cnt:R.filter(r=>r.tipo===k).length})).filter(x=>x.cnt>0);
-  const donutSvg=buildHomeDonut(progData.map(x=>({n:x.cnt,c:x.p.clr,l:x.k})),total);
-  const legendHtml=progData.map(x=>`<div class="hdl-item"><div class="hdl-dot" style="background:${x.p.clr}"></div><span class="hdl-lbl">${x.p.ico} ${x.k}</span><span class="hdl-n">${x.cnt}</span></div>`).join('');
-  document.getElementById('home-donut-wrap').innerHTML=donutSvg+`<div class="home-donut-legend">${legendHtml}</div>`;
+  // DONUT removido
 
-  // ACCESOS RÁPIDOS
-  const qbData=[
-    {ico:'📅',lbl:'Vis. Pendientes',n:visPe,clr:'var(--amb)',fn:()=>openQF('vis_pend','📅 Visita pendiente')},
-    {ico:'✅',lbl:'Visitados',       n:visOk, clr:'var(--grn)',fn:()=>openQF('vis_si','✅ Visitados')},
-    {ico:'🎓',lbl:'JCF',            n:R.filter(r=>r.tipo==='JCF').length,clr:'#fb923c',fn:()=>openQF('prog_JCF','🎓 JCF')},
-    {ico:'📊',lbl:'Estadísticas',   n:'→',   clr:'var(--vio)',fn:()=>go('estadisticas')},
-  ];
-  document.getElementById('quick-bar').innerHTML=qbData.map((a,i)=>`
-    <div class="qb-item" onclick="qbAct(${i})">
-      <span class="qb-ico">${a.ico}</span>
-      <div class="qb-n" style="color:${a.clr}">${a.n}</div>
-      <div class="qb-lbl">${a.lbl}</div>
-    </div>`).join('');
-  window._qbFns=qbData.map(a=>a.fn);
+  // ACCESOS RÁPIDOS removidos v18
+  if(document.getElementById('quick-bar'))document.getElementById('quick-bar').innerHTML='';
+  window._qbFns=[];
 
   // PROGRAMS ROW
   document.getElementById('prog-row').innerHTML=Object.entries(P).map(([k,p])=>{
@@ -1614,7 +1609,7 @@ function renderInicio(){
       `<button class="btn btn-s" style="font-size:11px;padding:8px;margin-bottom:14px" onclick="openQF('pendientes','⏳ Pendientes')">Ver todos →</button>`;
   }else{pw.innerHTML='';}
 
-  renderSeccionesToggle();
+  // secciones toggle en inicio desactivado
 
   const rec=[...R].reverse().slice(0,4);
   document.getElementById('rc-n').textContent=rec.length;
