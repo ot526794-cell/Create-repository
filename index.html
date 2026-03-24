@@ -661,6 +661,10 @@ body{display:flex;flex-direction:column;}
 .sec-act-btn.primary{background:var(--a);border-color:var(--a);color:#fff;}
 .sec-empty{text-align:center;padding:50px 20px;}
 .sec-empty-ico{font-size:48px;margin-bottom:14px;opacity:.3;}
+
+/* ── v16: edit-info-panel smooth expand ── */
+.edit-info-panel{background:var(--s2);border:1.5px solid var(--b2);border-radius:var(--r2);padding:0 14px;margin-bottom:0;display:block !important;}
+.edit-info-panel.show,.edit-info-panel[style*="max-height: 600"]{padding:12px 14px;}
 </style>
 <script>
 if('serviceWorker' in navigator){
@@ -930,24 +934,34 @@ if('serviceWorker' in navigator){
   <div class="hdl"></div>
   <div class="sh-title" id="sh-add-t">Nuevo Beneficiario</div>
   <div class="save-bar" id="save-bar"><div class="save-dot"></div><span id="save-txt">Los cambios se guardan al presionar Guardar</span></div>
-  <!-- v15: ID badge visible en nuevo y editar -->
-  <div id="form-id-badge" style="display:none;margin-bottom:12px;">
-    <div style="display:flex;align-items:center;gap:10px;background:var(--s2);border:1.5px solid var(--b2);border-radius:var(--r2);padding:10px 14px;">
-      <div style="background:var(--lg);border-radius:8px;padding:6px 12px;font-family:'Fira Code',monospace;font-size:18px;font-weight:800;color:#fff;" id="form-id-val">#—</div>
-      <div style="flex:1">
-        <div style="font-size:11px;font-weight:800;color:var(--a2);">ID del Sistema</div>
-        <div style="font-size:10px;color:var(--sft);" id="form-id-sub">Número único e irrepetible</div>
+  <!-- v16: ID card rediseñada — prominente y clara -->
+  <div id="form-id-badge" style="display:none;margin-bottom:14px;">
+    <div style="background:var(--lg);border-radius:14px;padding:14px 16px;position:relative;overflow:hidden;">
+      <!-- decoración -->
+      <div style="position:absolute;right:-16px;top:-16px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.08)"></div>
+      <div style="position:absolute;right:20px;bottom:-20px;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.05)"></div>
+      <!-- contenido -->
+      <div style="font-size:10px;font-weight:800;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px" id="form-id-mode-lbl">🆔 ID DEL SISTEMA</div>
+      <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px">
+        <span style="font-family:'Fira Code',monospace;font-size:38px;font-weight:800;color:#fff;line-height:1" id="form-id-val">#—</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.55);font-weight:600" id="form-id-mode-tag">NUEVO</span>
       </div>
-      <div style="font-size:20px;">🆔</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.65);font-weight:500" id="form-id-sub">Se asignará automáticamente al guardar</div>
     </div>
   </div>
-  <!-- v14: Panel info del registro al editar -->
-  <div class="edit-info-panel" id="edit-info-panel">
+  <!-- v16: Panel info colapsable al editar -->
+  <div id="edit-info-toggle" style="display:none;margin-bottom:10px">
+    <button onclick="toggleEditInfo()" style="width:100%;background:var(--s2);border:1px solid var(--b2);border-radius:var(--r2);padding:8px 12px;color:var(--sft);font-size:11px;font-weight:700;cursor:pointer;font-family:var(--fnt);display:flex;align-items:center;justify-content:space-between">
+      <span>📋 Ver información completa del registro</span>
+      <span id="edit-info-arrow">▼</span>
+    </button>
+  </div>
+  <div class="edit-info-panel" id="edit-info-panel" style="max-height:0;overflow:hidden;transition:max-height .35s ease,opacity .25s;opacity:0;">
     <div class="eip-title">📋 Información del registro</div>
     <div class="eip-grid" id="eip-grid"></div>
     <div id="eip-hist-wrap"></div>
   </div>
-  <div class="fg"><label class="fl">Folio</label><input class="fi" id="e-folio" placeholder="F-0001"/></div>
+  <div class="fg" style="margin-top:14px"><label class="fl">Folio</label><input class="fi" id="e-folio" placeholder="F-0001"/></div>
   <div class="fg">
     <label class="fl">Foto (opcional)</label>
     <div class="photo-btn" id="photo-btn" onclick="document.getElementById('e-photo-in').click()">
@@ -1739,17 +1753,22 @@ function openShAdd(){
   document.getElementById('e-tipo').selectedIndex=0;
   TG.vis='Pendiente';TG.uso='Mexico';TG.est='Activo';
   setTGVal('vis','Pendiente');setTGVal('uso','Mexico');setTGVal('est','Activo');
-  // v15: show next ID for new record
+  // v16: ID card para nuevo registro
   const nextId = R.length ? Math.max(...R.map(r=>r.id))+1 : 1;
   const idBadge=document.getElementById('form-id-badge');
+  if(idBadge) idBadge.style.display='block';
   const idVal=document.getElementById('form-id-val');
   const idSub=document.getElementById('form-id-sub');
-  if(idBadge){idBadge.style.display='block';}
-  if(idVal){idVal.textContent='#'+nextId;}
-  if(idSub){idSub.textContent='Se asignará al guardar';}
+  const idLbl=document.getElementById('form-id-mode-lbl');
+  const idTag=document.getElementById('form-id-mode-tag');
+  if(idVal) idVal.textContent='#'+nextId;
+  if(idSub) idSub.textContent='Se asignará automáticamente al guardar';
+  if(idLbl) idLbl.textContent='🆔 ID DEL SISTEMA — NUEVO REGISTRO';
+  if(idTag){ idTag.textContent='NUEVO'; idTag.style.color='rgba(255,255,255,.6)';}
   // v14: reset color + hide info panel
   currentTxtColor='';setTxtColor('',null,true);
-  const eip=document.getElementById('edit-info-panel');if(eip)eip.classList.remove('show');
+  showEditInfoToggle(false);
+  const eip=document.getElementById('edit-info-panel');if(eip){eip.classList.remove('show');eip.style.maxHeight='0';eip.style.opacity='0';}
   const sb=document.getElementById('save-bar');
   sb.className='save-bar';
   document.getElementById('save-txt').textContent='Los cambios se guardan al presionar Guardar';
@@ -1777,17 +1796,22 @@ function openEditSh(id){
   document.getElementById('e-reason').value='';
   TG.vis=r.visita||'Pendiente';TG.uso=r.uso||'Mexico';TG.est=r.estatus||'Activo';
   setTGVal('vis',TG.vis);setTGVal('uso',TG.uso);setTGVal('est',TG.est);
-  // v15: Show existing ID prominently
+  // v16: ID card para edición — muestra info completa
   const _idBadge=document.getElementById('form-id-badge');
+  if(_idBadge) _idBadge.style.display='block';
   const _idVal=document.getElementById('form-id-val');
   const _idSub=document.getElementById('form-id-sub');
-  if(_idBadge){_idBadge.style.display='block';}
-  if(_idVal){_idVal.textContent='#'+r.id;}
-  if(_idSub){_idSub.textContent='Folio: '+r.folio+' · Registrado: '+(r.fecha||'—');}
+  const _idLbl=document.getElementById('form-id-mode-lbl');
+  const _idTag=document.getElementById('form-id-mode-tag');
+  if(_idVal) _idVal.textContent='#'+r.id;
+  if(_idSub) _idSub.textContent='📂 '+r.folio+' · 📅 Registrado: '+(r.fecha||'—')+(r.ult?' · ✏️ '+r.ult:'');
+  if(_idLbl) _idLbl.textContent='🆔 ID DEL SISTEMA — EDITANDO';
+  if(_idTag){ _idTag.textContent='EDITANDO'; _idTag.style.color='rgba(255,255,255,.7)';}
   // v14: Color de texto
   currentTxtColor=r.txtColor||'';
   setTxtColor(currentTxtColor,null,true);
-  // v14: Panel de información del registro
+  // v16: Show info toggle + render
+  showEditInfoToggle(true);
   renderEditInfoPanel(r);
   const sb=document.getElementById('save-bar');
   sb.className='save-bar';
@@ -2875,6 +2899,30 @@ function execSrchAdv(){
   if(pool.length) showResults(pool,title,q,null);
   else showNoRes(q||'filtros aplicados');
   saveRec2(q);
+}
+
+
+/* ===== v16: EDIT INFO PANEL TOGGLE ===== */
+let editInfoOpen = false;
+function toggleEditInfo(){
+  editInfoOpen = !editInfoOpen;
+  const panel = document.getElementById('edit-info-panel');
+  const arrow = document.getElementById('edit-info-arrow');
+  if(panel){
+    panel.style.maxHeight = editInfoOpen ? '600px' : '0';
+    panel.style.opacity   = editInfoOpen ? '1'    : '0';
+  }
+  if(arrow) arrow.textContent = editInfoOpen ? '▲' : '▼';
+}
+function showEditInfoToggle(show){
+  const tog = document.getElementById('edit-info-toggle');
+  if(tog) tog.style.display = show ? 'block' : 'none';
+  // Reset collapsed state
+  editInfoOpen = false;
+  const panel = document.getElementById('edit-info-panel');
+  const arrow = document.getElementById('edit-info-arrow');
+  if(panel){ panel.style.maxHeight='0'; panel.style.opacity='0'; }
+  if(arrow) arrow.textContent = '▼';
 }
 
 /* ===== INIT ===== */
