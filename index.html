@@ -120,28 +120,27 @@ body{display:flex;flex-direction:column;}
 .main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 14px calc(var(--nh) + var(--sb) + 16px);}
 .pg{display:none;}.pg.on{display:block;animation:fu .2s ease;}
 @keyframes fu{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
-.stat{background:var(--card);border:1px solid var(--b1);border-radius:var(--r);padding:14px 12px;cursor:pointer;transition:.15s;position:relative;overflow:hidden;}
-.stat:active{transform:scale(.96);opacity:.85;}
-.stat::before{content:'';position:absolute;bottom:-10px;right:-10px;width:48px;height:48px;border-radius:50%;opacity:.1;}
-.stat.blue::before{background:var(--a);}.stat.green::before{background:var(--grn);}
-.stat.red::before{background:var(--red);}.stat.amber::before{background:var(--amb);}
-.stat.usa::before{background:var(--usa);}
-.stat-n{font-size:28px;font-weight:800;font-family:'Fira Code',monospace;line-height:1;}
-.stat-l{font-size:9px;font-weight:700;color:var(--mut);margin-top:5px;text-transform:uppercase;letter-spacing:.6px;}
-.stat-a{font-size:9px;color:var(--mut);margin-top:3px;}
-.stat.blue .stat-n{color:var(--a2);}.stat.green .stat-n{color:var(--grn);}
-.stat.red .stat-n{color:var(--red);}.stat.amber .stat-n{color:var(--amb);}
-.stat.usa .stat-n{color:var(--usa);}
-.stat-wide{grid-column:1/-1;display:flex;align-items:center;padding:12px 14px;gap:12px;}
-.stat-wide .stat-n{font-size:22px;}
-/* ── QA GRID nueva versión compacta ── */
-.qa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px;}
-.qa{background:var(--card);border:1px solid var(--b1);border-radius:var(--r2);padding:10px 6px 8px;text-align:center;cursor:pointer;transition:.15s;position:relative;overflow:hidden;}
-.qa:active{transform:scale(.93);opacity:.8;}
-.qa-ico{font-size:18px;display:block;margin-bottom:3px;}
-.qa-n{font-size:13px;font-weight:800;font-family:'Fira Code',monospace;margin-bottom:1px;}
-.qa-l{font-size:8px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.3px;line-height:1.2;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ── ACCESOS RAPIDOS nueva barra ── */
 .quick-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px;}
 .qb-item{background:var(--card);border:1px solid var(--b1);border-radius:13px;padding:12px 6px 10px;text-align:center;cursor:pointer;transition:.15s;display:flex;flex-direction:column;align-items:center;gap:3px;}
@@ -331,10 +330,10 @@ body{display:flex;flex-direction:column;}
 .no-res-ico{font-size:44px;margin-bottom:14px;opacity:.3;}
 .no-res h3{font-size:15px;font-weight:800;color:var(--sft);margin-bottom:5px;}
 .no-res p{font-size:12px;color:var(--mut);}
-.listen-wrap{display:none;text-align:center;padding:24px;background:var(--card);border:1.5px solid var(--red);border-radius:var(--r);margin-bottom:12px;}
-.listen-wrap.on{display:block;animation:fu .2s ease;}
-.listen-ring{width:50px;height:50px;border-radius:50%;border:3px solid var(--red);background:rgba(239,68,68,.1);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:20px;animation:pr 1s infinite;}
-@keyframes pr{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
+
+
+
+
 .chips{display:flex;gap:6px;margin-bottom:10px;overflow-x:auto;padding-bottom:2px;}
 .chip{flex:none;padding:5px 11px;border-radius:16px;font-size:10px;font-weight:800;border:1.5px solid var(--b2);background:var(--card);color:var(--mut);cursor:pointer;transition:.15s;}
 .chip.on{background:var(--a);border-color:var(--a);color:#fff;}
@@ -461,10 +460,10 @@ body{display:flex;flex-direction:column;}
 .dl-item{display:flex;align-items:center;gap:6px;font-size:10px;margin-bottom:5px;}
 .dl-dot{width:9px;height:9px;border-radius:3px;flex-shrink:0;}
 .dl-n{font-family:'Fira Code',monospace;color:var(--a2);margin-left:auto;}
-.stat-quick{display:flex;gap:8px;overflow-x:auto;margin-bottom:10px;padding-bottom:2px;}
-.sqc{flex:none;background:var(--card);border:1px solid var(--b1);border-radius:var(--r2);padding:10px 14px;text-align:center;min-width:90px;}
-.sqc-n{font-size:20px;font-weight:800;font-family:'Fira Code',monospace;}
-.sqc-l{font-size:9px;color:var(--mut);margin-top:3px;text-transform:uppercase;letter-spacing:.4px;}
+
+
+
+
 .dl-card{background:var(--card);border:1px solid var(--b1);border-radius:var(--r);padding:16px;margin-bottom:10px;}
 .dl-card-ico{font-size:32px;display:block;margin-bottom:8px;}
 .dl-card h3{font-size:14px;font-weight:800;margin-bottom:4px;}
@@ -722,6 +721,325 @@ body{display:flex;flex-direction:column;}
 .rec.est-baja{border-left:3px solid var(--red);}
 /* Light theme recs */
 [data-theme=arctic] .recs,[data-theme=campo] .recs{box-shadow:0 2px 12px rgba(0,0,0,.08);}
+
+/* ── v19: EDICIÓN INLINE EN DETALLE ── */
+.df{background:var(--card);border:1px solid var(--b1);border-radius:10px;padding:10px 12px;cursor:pointer;transition:.15s;position:relative;}
+.df:active{background:var(--c2);}
+.df::after{content:'✏️';position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:10px;opacity:0;transition:.2s;}
+.df:hover::after,.df:active::after{opacity:.5;}
+.df.editing{border-color:var(--a);box-shadow:0 0 0 2px rgba(77,158,255,.2);cursor:default;}
+.df.editing::after{display:none;}
+.df-inline-input{width:100%;background:none;border:none;outline:none;color:var(--txt);font-size:13px;font-weight:700;font-family:var(--fnt);padding:0;margin-top:4px;}
+.df-inline-input::placeholder{color:var(--mut);}
+.df-inline-select{width:100%;background:var(--s2);border:1px solid var(--b2);border-radius:7px;outline:none;color:var(--txt);font-size:12px;font-weight:700;font-family:var(--fnt);padding:5px 8px;margin-top:4px;}
+.df-save-row{display:flex;gap:5px;margin-top:6px;}
+.df-save-btn{flex:1;padding:6px;border:none;border-radius:7px;font-size:11px;font-weight:800;cursor:pointer;font-family:var(--fnt);}
+.df-save-ok{background:var(--grn);color:#000;}
+.df-save-no{background:var(--s2);color:var(--sft);border:1px solid var(--b2);}
+/* Quick status pills in detail */
+.det-quick-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.dqp{padding:6px 12px;border-radius:10px;font-size:11px;font-weight:800;cursor:pointer;border:1.5px solid transparent;transition:.15s;}
+.dqp:active{transform:scale(.94);}
+.dqp.vis-si{background:#0d2a18;color:var(--grn);border-color:var(--grn)30;}
+.dqp.vis-pe{background:#1e1a08;color:var(--amb);border-color:var(--amb)30;}
+.dqp.vis-no{background:#2a0e0e;color:var(--red);border-color:var(--red)30;}
+.dqp.uso-mx{background:#0d1f3a;color:var(--a2);border-color:var(--a2)30;}
+.dqp.uso-usa{background:#261a05;color:var(--usa);border-color:var(--usa)30;}
+.dqp.dqp-on{box-shadow:0 0 0 2px currentColor;}
+
+/* ── v19: PERFORMANCE hints ── */
+.rec{will-change:transform;}
+.sheet{will-change:transform;}
+.fab{will-change:transform;}
+.vis-prog-fill{will-change:width;}
+.sec-prog-fill{will-change:width;}
+/* ── v19: Reduce repaints en scroll ── */
+.main{-webkit-transform:translateZ(0);transform:translateZ(0);}
+/* ── v19: Toque más responsivo ── */
+.rec,.df,.dqp,.btn,.hdr-btn{touch-action:manipulation;}
+
+/* ══════════════════════════════════════════
+   v20 — REDISEÑO VISUAL COMPLETO
+   ══════════════════════════════════════════ */
+
+/* ── 1. HEADER glassmorphism suave ── */
+.hdr{
+  background:rgba(var(--bg-rgb,4,8,15),.92) !important;
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.06) !important;
+}
+[data-theme=arctic] .hdr,[data-theme=campo] .hdr{
+  background:rgba(244,247,251,.92) !important;
+  border-bottom:1px solid rgba(0,0,0,.08) !important;
+}
+
+/* ── 2. DRAG HANDLE más visible y moderno ── */
+.hdl{
+  width:40px;height:5px;border-radius:3px;
+  background:linear-gradient(90deg,var(--b2),var(--b3),var(--b2));
+  margin:13px auto 16px;
+  opacity:.7;
+}
+
+/* ── 3. HERO CARD con brillo animado ── */
+.hero-card{
+  background:var(--lg) !important;
+  border-radius:20px !important;
+  padding:18px 18px 16px !important;
+  box-shadow:0 8px 32px rgba(77,158,255,.22);
+  transition:transform .18s,box-shadow .18s !important;
+}
+.hero-card:active{
+  transform:scale(.97) !important;
+  box-shadow:0 4px 16px rgba(77,158,255,.15) !important;
+}
+.hero-n{font-size:52px !important;}
+.hero-lbl{font-size:11px !important;letter-spacing:1px !important;}
+[data-theme=arctic] .hero-card,[data-theme=campo] .hero-card{
+  box-shadow:0 8px 32px rgba(21,88,212,.2);
+}
+
+/* ── 4. TARJETAS más suaves y con mejor sombra ── */
+.recs{gap:0 !important;}
+.rec{
+  background:var(--card) !important;
+  border:none !important;
+  border-radius:0 !important;
+  border-bottom:1px solid var(--b1) !important;
+  margin-bottom:0 !important;
+  box-shadow:none !important;
+  border-left:3px solid transparent;
+  transition:background .15s !important;
+}
+.rec:first-child{border-radius:16px 16px 0 0 !important;}
+.rec:last-child{border-radius:0 0 16px 16px !important;border-bottom:none !important;}
+.rec:only-child{border-radius:16px !important;}
+.recs{
+  background:var(--card);
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid var(--b1);
+  box-shadow:0 4px 20px rgba(0,0,0,.22);
+}
+[data-theme=arctic] .recs,[data-theme=campo] .recs{
+  box-shadow:0 4px 20px rgba(0,0,0,.1);
+}
+.rec-body:active{background:var(--c2) !important;opacity:1 !important;}
+
+/* ── 5. AVATAR con sombra suave ── */
+.av{
+  border-radius:14px !important;
+  box-shadow:0 2px 8px rgba(0,0,0,.3);
+}
+.av-photo{
+  border-radius:14px !important;
+  box-shadow:0 2px 8px rgba(0,0,0,.3);
+}
+
+/* ── 6. BADGES con forma de píldora y mejor contraste ── */
+.bdg{
+  border-radius:20px !important;
+  padding:3px 10px !important;
+  font-size:10px !important;
+  font-weight:800 !important;
+  letter-spacing:.1px !important;
+}
+.bdg-a{background:rgba(40,212,100,.15) !important;color:#28d464 !important;border:1px solid rgba(40,212,100,.25);}
+.bdg-i{background:rgba(255,82,82,.15) !important;color:#ff5252 !important;border:1px solid rgba(255,82,82,.25);}
+.bdg-p{background:rgba(255,176,32,.15) !important;color:#ffb020 !important;border:1px solid rgba(255,176,32,.25);}
+.bdg-b{background:rgba(255,94,184,.15) !important;color:#ff5eb8 !important;border:1px solid rgba(255,94,184,.25);}
+[data-theme=arctic] .bdg-a,[data-theme=campo] .bdg-a{background:#d4f0dc !important;color:#0a5020 !important;border-color:#b8dfc4;}
+[data-theme=arctic] .bdg-i,[data-theme=campo] .bdg-i{background:#fde8e8 !important;color:#8a0000 !important;border-color:#f8c4c4;}
+[data-theme=arctic] .bdg-p,[data-theme=campo] .bdg-p{background:#fef3d0 !important;color:#7a4200 !important;border-color:#f8dfa0;}
+[data-theme=arctic] .bdg-b,[data-theme=campo] .bdg-b{background:#fde0f0 !important;color:#880044 !important;border-color:#f8c0dc;}
+
+/* ── 7. BOTONES con gradiente y sombra real ── */
+.btn{
+  border-radius:14px !important;
+  padding:14px !important;
+  font-size:14px !important;
+  letter-spacing:-.1px;
+  transition:transform .15s, box-shadow .15s, opacity .15s !important;
+}
+.btn:active{transform:scale(.96) !important;}
+.btn-p{
+  background:var(--lg) !important;
+  box-shadow:0 6px 20px rgba(77,158,255,.35) !important;
+}
+.btn-p:active{box-shadow:0 3px 10px rgba(77,158,255,.2) !important;}
+.btn-g{
+  background:linear-gradient(135deg,#1aaa40,#0e8030) !important;
+  box-shadow:0 6px 20px rgba(26,170,64,.3) !important;
+  color:#fff !important;
+}
+.btn-d{
+  background:linear-gradient(135deg,#ff5252,#cc2020) !important;
+  box-shadow:0 6px 20px rgba(255,82,82,.3) !important;
+}
+.btn-s{
+  background:var(--s2) !important;
+  border:1.5px solid var(--b2) !important;
+}
+
+/* ── 8. BOTÓN ＋ AGREGAR más prominente ── */
+.fab{
+  border-radius:32px !important;
+  width:auto !important;
+  padding:0 22px !important;
+  height:54px !important;
+  font-size:14px !important;
+  gap:7px !important;
+  box-shadow:0 8px 28px rgba(77,158,255,.45) !important;
+  letter-spacing:-.2px;
+  animation:fab-pulse 3s ease-in-out infinite;
+}
+@keyframes fab-pulse{
+  0%,100%{box-shadow:0 8px 28px rgba(77,158,255,.45);}
+  50%{box-shadow:0 8px 36px rgba(77,158,255,.65);}
+}
+
+/* ── 9. BARRA DE NAVEGACIÓN INFERIOR con blur ── */
+.bnav{
+  background:rgba(8,15,30,.92) !important;
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-top:1px solid rgba(255,255,255,.06) !important;
+  padding-bottom:calc(var(--sb) + 8px) !important;
+}
+[data-theme=arctic] .bnav,[data-theme=campo] .bnav{
+  background:rgba(232,238,246,.92) !important;
+  border-top:1px solid rgba(0,0,0,.08) !important;
+}
+.nb.on{color:var(--a2) !important;}
+.nb.on .ni{
+  transform:scale(1.22) !important;
+  filter:drop-shadow(0 2px 6px var(--a));
+}
+
+/* ── 10. TABS con pill activa ── */
+.tabs{
+  background:var(--bg) !important;
+  padding:0 8px;
+  gap:2px;
+}
+.tab{
+  border-radius:20px !important;
+  padding:7px 14px !important;
+  border-bottom:none !important;
+  transition:background .15s,color .15s !important;
+  font-size:12px !important;
+}
+.tab.on{
+  background:var(--a) !important;
+  color:#fff !important;
+  border-bottom:none !important;
+}
+[data-theme=arctic] .tab.on,[data-theme=campo] .tab.on{color:#fff !important;}
+
+/* ── 11. SHEET con esquinas más redondeadas ── */
+.sheet{
+  border-radius:28px 28px 0 0 !important;
+  box-shadow:0 -4px 40px rgba(0,0,0,.5);
+}
+[data-theme=arctic] .sheet,[data-theme=campo] .sheet{
+  box-shadow:0 -4px 40px rgba(0,0,0,.15);
+}
+
+/* ── 12. INPUTS con foco más vistoso ── */
+.fi:focus,.fs:focus,.fta:focus{
+  border-color:var(--a) !important;
+  box-shadow:0 0 0 3px rgba(77,158,255,.15) !important;
+  background:var(--c2) !important;
+}
+
+/* ── 13. CHIPS y PILLS tipo cápsula ── */
+.chip{border-radius:20px !important;font-size:11px !important;padding:6px 13px !important;}
+.sfp{border-radius:20px !important;font-size:10px !important;}
+.sort-chip{border-radius:20px !important;}
+.vfc{border-radius:20px !important;}
+
+/* ── 14. BARRA PROGRESO VISITAS con animación ── */
+.vis-prog-fill{
+  background:linear-gradient(90deg,var(--grn),#4ade80,var(--grn)) !important;
+  background-size:200% 100%;
+  animation:shimmer 2.5s linear infinite;
+}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+
+/* ── 15. SNACK más estilizado ── */
+.snack{
+  border-radius:20px !important;
+  padding:11px 20px !important;
+  font-size:13px !important;
+  box-shadow:0 8px 28px rgba(0,0,0,.4) !important;
+  backdrop-filter:blur(10px);
+}
+
+/* ── 16. ETIQUETAS de sección sh2 con línea separadora ── */
+.sh2{
+  font-size:11px !important;
+  letter-spacing:.8px !important;
+  padding-bottom:7px !important;
+  border-bottom:1px solid var(--b1) !important;
+  margin-bottom:10px !important;
+}
+
+/* ── 17. DETAIL GRID — celdas más claras ── */
+.df{
+  border-radius:12px !important;
+  padding:11px 13px !important;
+  border:1px solid var(--b1) !important;
+  transition:background .15s, border-color .15s !important;
+}
+.df:hover{border-color:var(--b2) !important;}
+.df.editing{
+  border-color:var(--a) !important;
+  background:var(--c2) !important;
+  box-shadow:0 0 0 2px rgba(77,158,255,.2) !important;
+}
+.det-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:14px;
+}
+.df.full{grid-column:1/-1;}
+.dl{font-size:9px;font-weight:800;color:var(--sft);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.dv{font-size:13px;font-weight:700;color:var(--txt);line-height:1.3;}
+
+/* ── 18. CONFIRM BOX más moderno ── */
+.conf-box{
+  border-radius:24px !important;
+  padding:26px 22px !important;
+  border:1px solid var(--b2) !important;
+}
+.conf-box h3{font-size:16px !important;margin-bottom:8px !important;}
+.conf-box p{font-size:13px !important;margin-bottom:18px !important;}
+
+/* ── 19. REC-ACTS (acciones de tarjeta) más suaves ── */
+.ra{
+  border-radius:10px !important;
+  padding:8px 6px !important;
+  font-size:10px !important;
+  border-width:1px !important;
+}
+.rec-acts{
+  padding:7px 10px 9px !important;
+  gap:5px !important;
+}
+
+/* ── 20. HERO stat cards con acento de color ── */
+.scard{
+  border-radius:14px !important;
+  padding:14px 12px 12px !important;
+  border-top:3px solid var(--b2) !important;
+  transition:transform .15s !important;
+}
+.scard:active{transform:scale(.94) !important;}
+.scard-n{font-size:28px !important;}
+.scard-l{font-size:9px !important;letter-spacing:.6px !important;}
+
 </style>
 <script>
 if('serviceWorker' in navigator){
@@ -1437,7 +1755,8 @@ function cycleVis(id,e){
   const prev=r.visita;
   r.visita=VSC[(VSC.indexOf(r.visita)+1)%VSC.length];r.ult=nowStr();
   logCh(r,'VISITA',prev,r.visita,'Cambio rápido');
-  svR();svH();render(curTab);
+  svR();svH();
+  if(curTab==='inicio')renderInicio();else render(curTab);
   if(navigator.vibrate)navigator.vibrate(r.visita==='Si'?[30,10,30]:25);
   snack(`🚗 Visita: ${r.visita}`,'🚗');
 }
@@ -1514,7 +1833,8 @@ function renderSeccionesToggle(){
 }
 
 /* ===== INICIO ===== */
-function renderInicio(){
+function renderInicio(){if(window._riPending)return;window._riPending=true;requestAnimationFrame(()=>{window._riPending=false;_renderInicioInner();});}
+function _renderInicioInner(){
   detectDups();
   const total=R.length,act=R.filter(r=>r.estatus==='Activo').length;
   const dups=R.filter(r=>r.dup).length,pend=R.filter(r=>r.estatus==='Pendiente').length;
@@ -1727,9 +2047,15 @@ function renderList(){
   });
   const sorted=sortRecs(fl);
   document.getElementById('list-sh').innerHTML=`Registros <span class="sh2-n">${sorted.length}</span>`;
-  document.getElementById('list-recs').innerHTML=sorted.length
-    ? sorted.map(recCard).join('')
-    : '<div class="empty"><div class="empty-ico">🔎</div><h3>Sin resultados</h3></div>';
+  const PAGE=60;
+  let listPage=1;
+  function renderListPage(){
+    const visible=sorted.slice(0,PAGE*listPage);
+    const hasMore=sorted.length>visible.length;
+    document.getElementById('list-recs').innerHTML=visible.map(recCard).join('')+
+      (hasMore?`<button class="btn btn-s" style="margin:12px 0;font-size:12px" onclick="listPage++;renderListPage()">⬇️ Ver más (${sorted.length-visible.length} restantes)</button>`:'');
+  }
+  renderListPage();
 }
 
 /* ===== TOGGLE GROUP ===== */
@@ -1972,43 +2298,71 @@ function openDet(id){
   const avatarDetHtml=r.photo
     ?`<img class="det-av-photo" src="${r.photo}" alt="${r.nombre}"/>`
     :`<div class="det-av" style="background:${p.bg};color:${p.clr}">${ini(r.nombre)}</div>`;
+  // Calcular edad
+  const edadStr=r.fnac?(()=>{const n=new Date(r.fnac+'T00:00:00'),h=new Date();let a=h.getFullYear()-n.getFullYear();if(h.getMonth()-n.getMonth()<0||(h.getMonth()===n.getMonth()&&h.getDate()<n.getDate()))a--;return a+' años';})():'';
   document.getElementById('det-body').innerHTML=`
     <div class="det-hero" style="background:linear-gradient(135deg,${p.bg},#1a2440);border-color:${p.clr}30">
       ${avatarDetHtml}
       <div class="det-name" style="${r.txtColor?'color:'+r.txtColor:''}">${r.nombre}</div>
-      <div class="det-folio">${r.folio} · ID ${r.id}${r.seccion?' · Ruta '+r.seccion:''}</div>
+      <div class="det-folio">${r.folio} · ID ${r.id}${r.seccion?' · Sec. '+r.seccion:''}</div>
       <div class="det-prog" style="background:${p.bg};color:${p.clr};border:1px solid ${p.clr}40">${p.ico} ${p.lbl}</div>
       ${r.dup?'<div style="margin-top:9px;background:#ff000018;color:var(--red);padding:4px 12px;border-radius:7px;font-size:10px;font-weight:800;display:inline-block">⚠️ REGISTRO DUPLICADO</div>':''}
     </div>
-    <div class="det-acts">
-      <div class="da ${vc.cls}" id="da-vis" onclick="togDA('vis')">
-        <div class="da-menu" id="dm-vis">${VSC.map(v=>{const c=VIS[v];return`<button class="da-opt" onclick="setDA(${r.id},'visita','${v}',event)">${c.ico} ${c.lbl}</button>`;}).join('')}</div>
-        <span class="da-ico">${vc.ico}</span>
-        <div class="da-lbl">🚗 Visita</div>
-        <div class="da-val" id="da-vis-val">${vc.lbl}</div>
-      </div>
-      <div class="da ${uc.cls}" id="da-uso" onclick="togDA('uso')">
-        <div class="da-menu" id="dm-uso">${USC.map(v=>{const c=USO[v];return`<button class="da-opt" onclick="setDA(${r.id},'uso','${v}',event)">${c.ico} ${c.lbl}</button>`;}).join('')}</div>
-        <span class="da-ico">${uc.ico}</span>
-        <div class="da-lbl">🌎 Ubicación</div>
-        <div class="da-val" id="da-uso-val">${uc.lbl}</div>
-      </div>
+
+    <!-- Pills rápidas visita + ubicación -->
+    <div class="det-quick-pills">
+      ${VSC.map(v=>{const cv=VIS[v];return`<div class="dqp ${cv.cls}${r.visita===v?' dqp-on':''}" onclick="detSetField(${r.id},'visita','${v}')">${cv.ico} ${cv.lbl}</div>`;}).join('')}
     </div>
-    ${r.tel?`<a href="tel:${r.tel}" class="call-btn"><span class="ci">📞</span>Llamar: ${r.tel}</a>`:`<div style="background:var(--s2);border:1.5px dashed var(--b2);border-radius:var(--r2);padding:11px;text-align:center;font-size:11px;color:var(--mut);margin-bottom:12px">Sin teléfono · <span style="color:var(--a2);cursor:pointer" onclick="openEditSh(${r.id})">Agregar →</span></div>`}
-    <div class="det-grid">
-      <div class="df"><div class="dl">Estatus</div><div class="dv"><span class="bdg ${sc}">${r.estatus}</span></div></div>
-      <div class="df"><div class="dl">Fecha registro</div><div class="dv">${fmtD(r.fecha)}</div></div>
-      <div class="df"><div class="dl">Última edición</div><div class="dv" style="font-size:10px;color:var(--mut)">${r.ult||'—'}</div></div>
-      <div class="df"><div class="dl">Folio</div><div class="dv" style="font-family:'Fira Code',monospace">${r.folio}</div></div>
-      ${r.seccion?`<div class="df" style="border-color:var(--a)40"><div class="dl" style="color:var(--a2)">📍 Sección</div><div class="dv" style="color:var(--a2);font-weight:800;font-size:18px">${r.seccion}</div></div>`:''}
-      ${r.curp?`<div class="df full" style="border-color:var(--ind)40"><div class="dl" style="color:var(--ind)">🪪 CURP</div><div class="dv" style="font-family:'Fira Code',monospace;font-size:12px;letter-spacing:.5px">${r.curp}</div></div>`:''}
-      ${r.fnac?`<div class="df"><div class="dl">🎂 Edad</div><div class="dv" style="font-weight:800;color:var(--a2)">${(()=>{const n=new Date(r.fnac+'T00:00:00'),h=new Date();let a=h.getFullYear()-n.getFullYear();if(h.getMonth()-n.getMonth()<0||(h.getMonth()===n.getMonth()&&h.getDate()<n.getDate()))a--;return a+' años';})()}</div></div>`:''}
-      <div class="df full"><div class="dl">Domicilio</div><div class="dv">${r.dom||'—'} ${r.num?'#'+r.num:''}, ${r.col||'—'}</div></div>
-      ${r.obs?`<div class="df full"><div class="dl">Observaciones</div><div class="dv">${r.obs}</div></div>`:''}
+    <div class="det-quick-pills" style="margin-top:-6px">
+      ${USC.map(v=>{const cu=USO[v];return`<div class="dqp ${cu.cls}${r.uso===v?' dqp-on':''}" onclick="detSetField(${r.id},'uso','${v}')">${cu.ico} ${cu.lbl}</div>`;}).join('')}
+    </div>
+
+    ${r.tel?`<a href="tel:${r.tel}" class="call-btn"><span class="ci">📞</span>${r.tel}</a>`:''}
+
+    <!-- Grid de campos — todos editables con tap -->
+    <div class="det-grid" id="det-grid-${r.id}">
+      <div class="df" onclick="inlineEdit(${r.id},'nombre','${r.nombre.replace(/'/g,"\\'")}','text','Nombre completo')">
+        <div class="dl">👤 Nombre</div><div class="dv" id="dv-nombre-${r.id}">${r.nombre}</div>
+      </div>
+      <div class="df" onclick="inlineEdit(${r.id},'folio','${r.folio}','text','Folio')">
+        <div class="dl">📂 Folio</div><div class="dv" id="dv-folio-${r.id}" style="font-family:'Fira Code',monospace">${r.folio}</div>
+      </div>
+      <div class="df" onclick="inlineEdit(${r.id},'tel','${r.tel||''}','tel','Teléfono')">
+        <div class="dl">📞 Teléfono</div><div class="dv" id="dv-tel-${r.id}">${r.tel||'—'}</div>
+      </div>
+      <div class="df" onclick="inlineEditSelect(${r.id},'estatus','${r.estatus}',['Activo','Inactivo','Pendiente','Baja'])">
+        <div class="dl">📊 Estatus</div><div class="dv" id="dv-estatus-${r.id}"><span class="bdg ${sc}">${r.estatus}</span></div>
+      </div>
+      <div class="df" onclick="inlineEdit(${r.id},'curp','${r.curp||''}','text','CURP')">
+        <div class="dl">🪪 CURP</div><div class="dv" id="dv-curp-${r.id}" style="font-family:'Fira Code',monospace;font-size:11px">${r.curp||'—'}</div>
+      </div>
+      <div class="df" onclick="inlineEdit(${r.id},'fnac','${r.fnac||''}','date','Fecha nacimiento')">
+        <div class="dl">🎂 Nacimiento</div><div class="dv" id="dv-fnac-${r.id}">${r.fnac?fmtD(r.fnac)+(edadStr?' · '+edadStr:''):'—'}</div>
+      </div>
+      <div class="df full" onclick="inlineEdit(${r.id},'dom','${(r.dom||'').replace(/'/g,"\\'")}','text','Calle / Av.')">
+        <div class="dl">📍 Domicilio</div><div class="dv" id="dv-dom-${r.id}">${r.dom||'—'} ${r.num?'#'+r.num:''}</div>
+      </div>
+      <div class="df" onclick="inlineEdit(${r.id},'num','${r.num||''}','text','Número')">
+        <div class="dl">🔢 Número</div><div class="dv" id="dv-num-${r.id}">${r.num||'—'}</div>
+      </div>
+      <div class="df" onclick="inlineEdit(${r.id},'col','${(r.col||'').replace(/'/g,"\\'")}','text','Colonia')">
+        <div class="dl">🏘️ Colonia</div><div class="dv" id="dv-col-${r.id}">${r.col||'—'}</div>
+      </div>
+      <div class="df" onclick="inlineEdit(${r.id},'seccion','${r.seccion||''}','text','Sección / Ruta')">
+        <div class="dl">📍 Sección</div><div class="dv" id="dv-seccion-${r.id}" style="font-weight:800;color:var(--a2)">${r.seccion||'—'}</div>
+      </div>
+      <div class="df full" onclick="inlineEditSelect(${r.id},'tipo','${r.tipo}',['PAM','PCD','JCF','MT','BBJ'])">
+        <div class="dl">📋 Programa</div><div class="dv" id="dv-tipo-${r.id}"><span style="color:${p.clr}">${p.ico} ${p.lbl}</span></div>
+      </div>
+      <div class="df full" onclick="inlineEdit(${r.id},'obs','${(r.obs||'').replace(/'/g,\"\'\").replace(/\`/g,'\\`')}','text','Observaciones / Notas')">
+        <div class="dl">📝 Observaciones</div><div class="dv" id="dv-obs-${r.id}" style="color:var(--sft)">${r.obs||'—'}</div>
+      </div>
+      <div class="df"><div class="dl">📅 Registro</div><div class="dv">${fmtD(r.fecha)}</div></div>
+      <div class="df"><div class="dl">✏️ Última edición</div><div class="dv" style="font-size:10px;color:var(--sft)">${r.ult||'—'}</div></div>
     </div>
     ${histHtml}
-    <div class="btn2">
-      <button type="button" class="btn btn-s" onclick="openEditSh(${r.id})">✏️ Editar</button>
+    <div class="btn2" style="margin-top:12px">
+      <button type="button" class="btn btn-s" onclick="openEditSh(${r.id})">✏️ Editar completo</button>
       <button type="button" class="btn btn-s" style="color:var(--red);border-color:var(--red)" onclick="confDel(${r.id})">🗑️ Eliminar</button>
     </div>
     ${r.dup?`<button type="button" class="btn btn-d mt8" onclick="confDel(${r.id})">🗑️ Eliminar este duplicado</button>`:''}
@@ -2131,7 +2485,7 @@ function onSI(){
   clearTimeout(srchDeb);
   if(srchAdvOpen){srchDeb=setTimeout(()=>execSrchAdv(),100);return;}
   if(!q){showSrchIdle();return;}
-  srchDeb=setTimeout(()=>execSrch(q),100);
+  srchDeb=setTimeout(()=>execSrch(q),80);
 }
 function onSF(){}
 function onSB(){}
@@ -2379,19 +2733,8 @@ let calD=new Date(),selDay=null;
 const MOS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 function prevMo(){calD=new Date(calD.getFullYear(),calD.getMonth()-1,1);renderCal();}
 function nextMo(){calD=new Date(calD.getFullYear(),calD.getMonth()+1,1);renderCal();}
-function renderCal(){
-  const y=calD.getFullYear(),m=calD.getMonth(),tod=today();
-  document.getElementById('cal-mo').textContent=`${MOS[m]} ${y}`;
-  const first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
-  let g=['Dom','Lun','Mar','Mie','Jue','Vie','Sab'].map(d=>`<div class="cal-dh">${d}</div>`).join('');
-  for(let i=0;i<first;i++)g+=`<button class="cd empty"></button>`;
-  for(let d=1;d<=days;d++){
-    const ds=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    g+=`<button class="cd${ds===tod?' today':''}${E.some(e=>e.date===ds)?' has':''}${ds===selDay&&ds!==tod?' sel':''}" onclick="selD('${ds}')">${d}</button>`;
-  }
-  document.getElementById('cal-grid').innerHTML=g;
-  showDayEvs(selDay||tod);
-}
+// renderCal removida v19
+
 function selD(ds){selDay=ds;renderCal();}
 function openShEv(){document.getElementById('evt').value='';document.getElementById('evh').value='09:00';document.getElementById('evtp').selectedIndex=0;document.getElementById('evn').value='';openSheet('sh-ev');}
 function doSaveEv(){
@@ -3072,6 +3415,106 @@ function doSaveAndNew(){
       snack('💾➕ Guardado — formulario listo para el siguiente','💾');
     }
   },1000);
+}
+
+
+/* ===== v19: EDICIÓN INLINE EN DETALLE ===== */
+let _activeInlineId=null,_activeInlineField=null;
+
+function detSetField(id,field,val){
+  const r=R.find(x=>x.id===id);if(!r)return;
+  const prev=r[field];
+  r[field]=val;r.ult=nowStr();
+  logCh(r,field.toUpperCase(),prev,val,'Cambio rápido desde detalle');
+  svR();svH();
+  // Refresh det view
+  openDet(id);
+  if(navigator.vibrate)navigator.vibrate(15);
+  snack(`✅ ${field==='visita'?'Visita':'Ubicación'}: ${val}`,'✅');
+}
+
+function inlineEdit(id,field,currentVal,inputType,placeholder){
+  const r=R.find(x=>x.id===id);if(!r)return;
+  // If same field already editing, cancel
+  if(_activeInlineId===id&&_activeInlineField===field){_cancelInline(id,field,currentVal);return;}
+  _cancelAnyInline();
+  _activeInlineId=id;_activeInlineField=field;
+  const dvEl=document.getElementById('dv-'+field+'-'+id);
+  const dfEl=dvEl?.closest('.df');
+  if(!dvEl||!dfEl)return;
+  dfEl.classList.add('editing');
+  const realVal=r[field]||'';
+  dvEl.innerHTML=`<input class="df-inline-input" id="ii-${field}-${id}" type="${inputType}" value="${String(realVal).replace(/"/g,'&quot;')}" placeholder="${placeholder}" autocomplete="off"/>
+    <div class="df-save-row">
+      <button class="df-save-btn df-save-ok" onclick="saveInline(${id},'${field}')">✓ Guardar</button>
+      <button class="df-save-btn df-save-no" onclick="_cancelInline(${id},'${field}','${String(currentVal).replace(/'/g,"\\'")}')">✗ Cancelar</button>
+    </div>`;
+  const inp=document.getElementById('ii-'+field+'-'+id);
+  if(inp){
+    setTimeout(()=>inp.focus(),50);
+    inp.addEventListener('keydown',e=>{
+      if(e.key==='Enter')saveInline(id,field);
+      if(e.key==='Escape')_cancelInline(id,field,currentVal);
+    });
+  }
+}
+
+function inlineEditSelect(id,field,currentVal,options){
+  const r=R.find(x=>x.id===id);if(!r)return;
+  if(_activeInlineId===id&&_activeInlineField===field){_cancelInline(id,field,currentVal);return;}
+  _cancelAnyInline();
+  _activeInlineId=id;_activeInlineField=field;
+  const dvEl=document.getElementById('dv-'+field+'-'+id);
+  const dfEl=dvEl?.closest('.df');
+  if(!dvEl||!dfEl)return;
+  dfEl.classList.add('editing');
+  const optHtml=options.map(o=>`<option value="${o}"${o===currentVal?' selected':''}>${o}</option>`).join('');
+  dvEl.innerHTML=`<select class="df-inline-select" id="ii-${field}-${id}">${optHtml}</select>
+    <div class="df-save-row">
+      <button class="df-save-btn df-save-ok" onclick="saveInline(${id},'${field}')">✓ Guardar</button>
+      <button class="df-save-btn df-save-no" onclick="_cancelInline(${id},'${field}','${currentVal}')">✗ Cancelar</button>
+    </div>`;
+  setTimeout(()=>document.getElementById('ii-'+field+'-'+id)?.focus(),50);
+}
+
+function saveInline(id,field){
+  const r=R.find(x=>x.id===id);if(!r)return;
+  const inp=document.getElementById('ii-'+field+'-'+id);if(!inp)return;
+  let val=inp.value.trim();
+  // Auto uppercase for specific fields
+  if(['nombre','folio','curp'].includes(field))val=val.toUpperCase();
+  const prev=r[field]||'';
+  if(val===prev){_cancelAnyInline();openDet(id);return;}
+  r[field]=val;r.ult=nowStr();
+  logCh(r,field.toUpperCase(),prev,val,'Edición inline');
+  detectDups();svR();svH();
+  _activeInlineId=null;_activeInlineField=null;
+  openDet(id);render(curTab);
+  snack(`💾 ${field.charAt(0).toUpperCase()+field.slice(1)} actualizado`,'💾');
+  if(navigator.vibrate)navigator.vibrate([20,10,20]);
+}
+
+function _cancelInline(id,field,originalVal){
+  _activeInlineId=null;_activeInlineField=null;
+  const dvEl=document.getElementById('dv-'+field+'-'+id);
+  const dfEl=dvEl?.closest('.df');
+  if(dfEl)dfEl.classList.remove('editing');
+  openDet(id);
+}
+
+function _cancelAnyInline(){
+  if(_activeInlineId&&_activeInlineField){
+    const dvEl=document.getElementById('dv-'+_activeInlineField+'-'+_activeInlineId);
+    const dfEl=dvEl?.closest('.df');
+    if(dfEl)dfEl.classList.remove('editing');
+  }
+  _activeInlineId=null;_activeInlineField=null;
+}
+
+
+function inlineEditObs(id){
+  const r=R.find(x=>x.id===id);if(!r)return;
+  inlineEdit(id,'obs',r.obs||'','text','Observaciones / Notas');
 }
 
 /* ===== INIT ===== */
