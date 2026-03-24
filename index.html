@@ -205,7 +205,7 @@ body{display:flex;flex-direction:column;}
 .days-badge.hot{background:#1e1a08;color:#fbbf24;}
 .days-badge.warn{background:#2a0e0e;color:#f87171;}
 /* Foto avatar */
-.av-photo{width:42px;height:42px;border-radius:12px;object-fit:cover;flex-shrink:0;}
+.av-photo{width:56px;height:56px;border-radius:14px;object-fit:cover;flex-shrink:0;border:2.5px solid transparent;}
 .det-av-photo{width:60px;height:60px;border-radius:18px;object-fit:cover;margin:0 auto 10px;display:block;}
 .photo-btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:9px;background:var(--s2);border:1.5px dashed var(--b3);border-radius:10px;cursor:pointer;font-size:11px;font-weight:700;color:var(--sft);margin-bottom:12px;transition:.15s;}
 .photo-btn:active{background:var(--b1);}
@@ -665,6 +665,41 @@ body{display:flex;flex-direction:column;}
 /* ── v16: edit-info-panel smooth expand ── */
 .edit-info-panel{background:var(--s2);border:1.5px solid var(--b2);border-radius:var(--r2);padding:0 14px;margin-bottom:0;display:block !important;}
 .edit-info-panel.show,.edit-info-panel[style*="max-height: 600"]{padding:12px 14px;}
+
+/* ── v17: HISTORIAL TIMELINE ── */
+.hi{background:var(--card);border:1px solid var(--b1);border-radius:var(--r2);padding:11px 13px 9px;margin-bottom:8px;position:relative;border-left:4px solid var(--b2);}
+.hi.new{border-left-color:var(--grn);}
+.hi.del{border-left-color:var(--red);}
+.hi.edit{border-left-color:var(--a);}
+.hi-header{display:flex;align-items:flex-start;gap:9px;margin-bottom:6px;}
+.hi-type-ico{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.hi-type-ico.new{background:#0d2a18;}.hi-type-ico.del{background:#2a0e0e;}.hi-type-ico.edit{background:#0d1f3a;}
+.hi-meta{flex:1;min-width:0;}
+.hi-who{font-size:12px;font-weight:800;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.hi-when{font-size:10px;color:var(--sft);margin-top:1px;font-family:'Fira Code',monospace;}
+.hi-del-btn{background:none;border:none;color:var(--mut);font-size:13px;cursor:pointer;padding:3px 5px;border-radius:5px;flex-shrink:0;}
+.hi-del-btn:active{background:var(--red);color:#fff;}
+.hi-changes{font-size:11px;color:var(--t2);line-height:1.5;margin-bottom:5px;word-break:break-word;}
+.hi-footer{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--mut);}
+.hi-motivo{background:var(--s2);padding:2px 7px;border-radius:5px;font-size:9px;font-weight:700;}
+.hi-filter-bar{display:flex;gap:6px;margin-bottom:10px;overflow-x:auto;padding-bottom:2px;}
+.hi-filter-chip{flex:none;padding:5px 11px;border-radius:14px;font-size:10px;font-weight:800;border:1.5px solid var(--b2);background:var(--card);color:var(--sft);cursor:pointer;transition:.15s;}
+.hi-filter-chip.on{background:var(--a);border-color:var(--a);color:#fff;}
+
+/* ── v17: ALERTA SIN VISITAR ── */
+.alert-no-visit{background:linear-gradient(135deg,#2a0505,#1a0a0a);border:1.5px solid var(--red);border-radius:var(--r);padding:13px 14px;margin-bottom:12px;cursor:pointer;transition:.15s;}
+.alert-no-visit:active{transform:scale(.98);}
+.alert-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.alert-ico{width:36px;height:36px;border-radius:10px;background:#3a0808;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.alert-title{font-size:13px;font-weight:800;color:var(--red);}
+.alert-sub{font-size:10px;color:var(--sft);margin-top:1px;}
+.alert-count{font-family:'Fira Code',monospace;font-size:26px;font-weight:800;color:var(--red);margin-left:auto;}
+.alert-names{font-size:10px;color:var(--sft);line-height:1.6;}
+.alert-names span{background:#2a0a0a;padding:1px 6px;border-radius:4px;margin-right:4px;margin-bottom:3px;display:inline-block;}
+/* Light theme alert */
+[data-theme=arctic] .alert-no-visit,[data-theme=campo] .alert-no-visit{background:#fff5f5;border-color:#dc2626;}
+[data-theme=arctic] .alert-ico,[data-theme=campo] .alert-ico{background:#fee2e2;}
+[data-theme=arctic] .alert-names span,[data-theme=campo] .alert-names span{background:#fecaca;}
 </style>
 <script>
 if('serviceWorker' in navigator){
@@ -704,6 +739,8 @@ if('serviceWorker' in navigator){
 <div class="main" id="main">
   <!-- INICIO -->
   <div class="pg on" id="p-inicio">
+    <!-- v17: Alerta sin visitar -->
+    <div id="alert-no-visit-wrap"></div>
     <!-- Búsqueda rápida -->
     <div class="home-srch-drop">
       <div class="home-srch">
@@ -982,6 +1019,11 @@ if('serviceWorker' in navigator){
     </select>
   </div>
   <div class="fg"><label class="fl">Nombre Completo</label><input class="fi" id="e-nombre" placeholder="Apellido Apellido Nombre"/></div>
+  <div class="fr2">
+    <div class="fg"><label class="fl">CURP</label><input class="fi" id="e-curp" placeholder="XXXX000000XXXXXX00" maxlength="18" oninput="this.value=this.value.toUpperCase()" style="font-family:'Fira Code',monospace;letter-spacing:.5px"/></div>
+    <div class="fg"><label class="fl">Fecha de Nacimiento</label><input class="fi" id="e-fnac" type="date" oninput="updEdad()"/></div>
+  </div>
+  <div id="edad-display" style="display:none;margin:-8px 0 12px;padding:8px 12px;background:var(--s2);border-radius:var(--r3);font-size:12px;font-weight:700;color:var(--a2)"></div>
   <div class="fg"><label class="fl">Teléfono</label><input class="fi" id="e-tel" type="tel" placeholder="492-000-0000"/></div>
   <div class="fr2">
     <div class="fg"><label class="fl">Domicilio</label><input class="fi" id="e-dom" placeholder="Calle / Av."/></div>
@@ -1042,6 +1084,7 @@ if('serviceWorker' in navigator){
     <input class="fi" id="e-reason" placeholder="¿Qué se modificó?"/>
   </div>
   <button type="button" class="btn btn-p mt8" id="sh-save-btn" onclick="doSaveRec()">💾 Guardar Beneficiario</button>
+  <button type="button" class="btn btn-g mt8" id="sh-save-new-btn" onclick="doSaveAndNew()" style="display:none">💾➕ Guardar y agregar otro</button>
   <button type="button" class="btn btn-s mt8" onclick="closeSheet('sh-add')">Cancelar</button>
 </div>
 <!-- SHEET: DETAIL -->
@@ -1348,8 +1391,8 @@ function recCard(r){
   }
   // Photo or initials
   const avatarHtml=r.photo
-    ?`<img class="av-photo" src="${r.photo}" alt="${r.nombre}"/>`
-    :`<div class="av" style="background:${p.bg};color:${p.clr}">${ini(r.nombre)}</div>`;
+    ?`<img class="av-photo" src="${r.photo}" alt="${r.nombre}" style="border-color:${p.clr}60"/>`
+    :`<div class="av" style="background:${p.bg};color:${p.clr};width:56px;height:56px;border-radius:14px">${ini(r.nombre)}</div>`;
   return `<div class="rec${r.dup?' dup':''} ${estCls}">
     <div class="rec-bar" style="background:${p.clr}40;border-bottom:2px solid ${p.clr}60"></div>
     <div class="rec-body" onclick="openDet(${r.id})">
@@ -1430,15 +1473,28 @@ function renderSeccionesToggle(){
     const regs=R.filter(r=>r.seccion===sec);
     const cnt=regs.length;
     const vis=regs.filter(r=>r.visita==='Si'||r.visita==='Sí').length;
+    const pend=regs.filter(r=>r.visita==='Pendiente').length;
+    const noVis=regs.filter(r=>r.visita==='No').length;
     const usa=regs.filter(r=>r.uso==='Estados Unidos').length;
     const pct=cnt?Math.round(vis/cnt*100):0;
-    const pctW=cnt?Math.round(cnt/Math.max(...secciones.map(s=>R.filter(r=>r.seccion===s).length))*100):0;
     html+=`<div class="sec-item" onclick="openQF('sec_${sec}','📍 Sección ${sec}')">
       <div class="sec-av">${sec}</div>
       <div style="flex:1;min-width:0">
         <div class="sec-name">Sección ${sec}</div>
-        <div class="sec-sub">${cnt} benef. · ✅${vis} visitados (${pct}%)${usa?' · ✈️'+usa+' USA':''}</div>
-        <div class="sec-pbar"><div class="sec-pbar-fill" style="width:${pct}%"></div></div>
+        <div style="display:flex;gap:8px;font-size:9px;font-weight:700;margin:3px 0;flex-wrap:wrap">
+          <span style="color:var(--grn)">✅ ${vis}</span>
+          <span style="color:var(--amb)">⏳ ${pend}</span>
+          <span style="color:var(--red)">❌ ${noVis}</span>
+          ${usa?`<span style="color:var(--usa)">✈️ ${usa}</span>`:''}
+        </div>
+        <div class="sec-pbar" style="height:6px">
+          <div style="display:flex;height:100%;border-radius:3px;overflow:hidden;gap:1px">
+            <div style="width:${cnt?Math.round(vis/cnt*100):0}%;background:var(--grn);transition:width .5s"></div>
+            <div style="width:${cnt?Math.round(pend/cnt*100):0}%;background:var(--amb);transition:width .5s"></div>
+            <div style="flex:1;background:var(--b2)"></div>
+          </div>
+        </div>
+        <div style="font-size:9px;color:var(--sft);margin-top:3px">${pct}% visitados</div>
       </div>
       <div class="sec-badge">${cnt}</div>
     </div>`;
@@ -1459,6 +1515,28 @@ function renderInicio(){
 
   // HERO TOTAL
   document.getElementById('hero-n-total').textContent=total;
+
+  // v17: ALERTA BENEFICIARIOS SIN VISITAR +30 DÍAS
+  const sinVisitar30=R.filter(r=>{
+    if(r.visita==='Si'||r.estatus==='Baja')return false;
+    const ds=r.fecha?daysSince(r.fecha):null;
+    return ds!==null&&ds>30;
+  });
+  const alertWrap=document.getElementById('alert-no-visit-wrap');
+  if(alertWrap){
+    if(sinVisitar30.length){
+      const names=sinVisitar30.slice(0,4).map(r=>`<span>${r.nombre.split(' ')[0]}</span>`).join('');
+      const extra=sinVisitar30.length>4?`<span>+${sinVisitar30.length-4} más</span>`:'';
+      alertWrap.innerHTML=`<div class="alert-no-visit" onclick="openQF('sin_visita_30','⚠️ Sin visitar +30 días')">
+        <div class="alert-header">
+          <div class="alert-ico">🚨</div>
+          <div style="flex:1"><div class="alert-title">Sin visitar más de 30 días</div><div class="alert-sub">Requieren atención urgente</div></div>
+          <div class="alert-count">${sinVisitar30.length}</div>
+        </div>
+        <div class="alert-names">${names}${extra}</div>
+      </div>`;
+    }else{alertWrap.innerHTML='';}
+  }
 
   // BARRA DE PROGRESO DE VISITAS
   const pct=total?Math.round(visOk/total*100):0;
@@ -1593,6 +1671,7 @@ function openQF(filter,title){
     usa:       ()=>R.filter(r=>r.uso==='Estados Unidos'),
     baja:      ()=>R.filter(r=>r.estatus==='Baja'),
     vis_pend:  ()=>R.filter(r=>r.visita==='Pendiente'),
+    sin_visita_30: ()=>R.filter(r=>r.visita!=='Si'&&r.estatus!=='Baja'&&r.fecha&&daysSince(r.fecha)>30),
     vis_si:    ()=>R.filter(r=>r.visita==='Si'),
     vis_no:    ()=>R.filter(r=>r.visita==='No'),
   };
@@ -1746,10 +1825,12 @@ function openShAdd(){
   document.getElementById('e-photo-in').value='';
   document.getElementById('sh-add-t').textContent='Nuevo Beneficiario';
   document.getElementById('sh-save-btn').textContent='💾 Guardar Beneficiario';
+  const _snBtn=document.getElementById('sh-save-new-btn');if(_snBtn)_snBtn.style.display='block';
   document.getElementById('e-reason-wrap').style.display='none';
-  ['folio','nombre','tel','dom','num','col','obs','reason','seccion'].forEach(f=>{
+  ['folio','nombre','tel','dom','num','col','obs','reason','seccion','curp','fnac'].forEach(f=>{
     const el=document.getElementById('e-'+f);if(el)el.value='';
   });
+  const _edDisp=document.getElementById('edad-display');if(_edDisp)_edDisp.style.display='none';
   document.getElementById('e-tipo').selectedIndex=0;
   TG.vis='Pendiente';TG.uso='Mexico';TG.est='Activo';
   setTGVal('vis','Pendiente');setTGVal('uso','Mexico');setTGVal('est','Activo');
@@ -1783,6 +1864,7 @@ function openEditSh(id){
   else{btn.innerHTML='<span>📷</span><span>Tomar foto o elegir de galería</span>';}
   document.getElementById('sh-add-t').textContent='Editar Beneficiario';
   document.getElementById('sh-save-btn').textContent='💾 Guardar Cambios';
+  const _snBtnE=document.getElementById('sh-save-new-btn');if(_snBtnE)_snBtnE.style.display='none';
   document.getElementById('e-reason-wrap').style.display='block';
   document.getElementById('e-folio').value=r.folio||'';
   document.getElementById('e-tipo').value=r.tipo||'';
@@ -1792,6 +1874,8 @@ function openEditSh(id){
   document.getElementById('e-num').value=r.num||'';
   document.getElementById('e-col').value=r.col||'';
   document.getElementById('e-obs').value=r.obs||'';
+  const eCurp=document.getElementById('e-curp');if(eCurp)eCurp.value=r.curp||'';
+  const eFnac=document.getElementById('e-fnac');if(eFnac){eFnac.value=r.fnac||'';updEdad();}
   const eSecEl=document.getElementById('e-seccion');if(eSecEl)eSecEl.value=r.seccion||'';
   document.getElementById('e-reason').value='';
   TG.vis=r.visita||'Pendiente';TG.uso=r.uso||'Mexico';TG.est=r.estatus||'Activo';
@@ -1842,6 +1926,8 @@ function doSaveRec(){
     seccion:document.getElementById('e-seccion')?.value?.trim()||'',
     photo:  currentPhoto||null,
     txtColor: currentTxtColor||'',
+    curp:   (document.getElementById('e-curp')?.value||'').trim().toUpperCase(),
+    fnac:   document.getElementById('e-fnac')?.value||'',
   };
   if(editId){
     const r=R.find(x=>x.id===editId);
@@ -1920,6 +2006,8 @@ function openDet(id){
       <div class="df"><div class="dl">Última edición</div><div class="dv" style="font-size:10px;color:var(--mut)">${r.ult||'—'}</div></div>
       <div class="df"><div class="dl">Folio</div><div class="dv" style="font-family:'Fira Code',monospace">${r.folio}</div></div>
       ${r.seccion?`<div class="df" style="border-color:var(--a)40"><div class="dl" style="color:var(--a2)">📍 Sección</div><div class="dv" style="color:var(--a2);font-weight:800;font-size:18px">${r.seccion}</div></div>`:''}
+      ${r.curp?`<div class="df full" style="border-color:var(--ind)40"><div class="dl" style="color:var(--ind)">🪪 CURP</div><div class="dv" style="font-family:'Fira Code',monospace;font-size:12px;letter-spacing:.5px">${r.curp}</div></div>`:''}
+      ${r.fnac?`<div class="df"><div class="dl">🎂 Edad</div><div class="dv" style="font-weight:800;color:var(--a2)">${(()=>{const n=new Date(r.fnac+'T00:00:00'),h=new Date();let a=h.getFullYear()-n.getFullYear();if(h.getMonth()-n.getMonth()<0||(h.getMonth()===n.getMonth()&&h.getDate()<n.getDate()))a--;return a+' años';})()}</div></div>`:''}
       <div class="df full"><div class="dl">Domicilio</div><div class="dv">${r.dom||'—'} ${r.num?'#'+r.num:''}, ${r.col||'—'}</div></div>
       ${r.obs?`<div class="df full"><div class="dl">Observaciones</div><div class="dv">${r.obs}</div></div>`:''}
     </div>
@@ -1974,15 +2062,50 @@ function confClearH(){
 }
 
 /* ===== HISTORY ===== */
+let histFilter='all';
 function renderHist(){
-  document.getElementById('hist-sh').innerHTML=`Historial <span class="sh2-n">${H.length}</span>`;
-  document.getElementById('hist-list').innerHTML=[...H].reverse().map(h=>`
-    <div class="hi ${h.tipo==='del'?'del':h.tipo==='new'?'new':''}">
-      <button type="button" class="hi-del" onclick="delHI(${h.id})">✕</button>
-      <div class="hi-top"><span class="hi-f">${h.folio} · ${h.nombre.split(' ').slice(0,2).join(' ')}</span><span class="hi-d">${h.fecha}</span></div>
-      <div class="hi-t">${h.cambios}</div>
-      <div class="hi-b">Motivo: ${h.motivo} · Por: ${h.resp}</div>
-    </div>`).join('')||'<div class="empty"><div class="empty-ico">📝</div><h3>Sin historial</h3><p>Los cambios aparecen aquí</p></div>';
+  const TYPE_ICO={new:'✨',edit:'✏️',del:'🗑️'};
+  const TYPE_LBL={new:'Nuevo registro',edit:'Edición',del:'Eliminado'};
+  const TYPE_CLR={new:'var(--grn)',edit:'var(--a)',del:'var(--red)'};
+  // Filter bar
+  const filterBar=`<div class="hi-filter-bar">
+    ${[['all','🔍 Todos'],['new','✨ Nuevos'],['edit','✏️ Ediciones'],['del','🗑️ Eliminados']].map(([v,l])=>
+      `<button class="hi-filter-chip${histFilter===v?' on':''}" onclick="histFilter='${v}';renderHist()">${l}</button>`
+    ).join('')}
+  </div>`;
+  const all=[...H].reverse();
+  const filtered=histFilter==='all'?all:all.filter(h=>h.tipo===histFilter);
+  document.getElementById('hist-sh').innerHTML=`Historial <span class="sh2-n">${filtered.length}/${H.length}</span>`;
+  if(!filtered.length){
+    document.getElementById('hist-list').innerHTML=filterBar+'<div class="empty"><div class="empty-ico">📝</div><h3>Sin entradas</h3><p>No hay registros de este tipo</p></div>';
+    return;
+  }
+  document.getElementById('hist-list').innerHTML=filterBar+filtered.map(h=>{
+    const tipo=h.tipo||'edit';
+    const ico=TYPE_ICO[tipo]||'✏️';
+    const clr=TYPE_CLR[tipo]||'var(--a)';
+    const lbl=TYPE_LBL[tipo]||'Cambio';
+    // Split changes into readable lines
+    const cambioLines=(h.cambios||'').split(' | ').map(line=>
+      `<div style="padding:2px 0;border-bottom:1px solid var(--b1)">${line}</div>`
+    ).join('');
+    return `<div class="hi ${tipo}" style="border-left-color:${clr}">
+      <div class="hi-header">
+        <div class="hi-type-ico ${tipo}">${ico}</div>
+        <div class="hi-meta">
+          <div class="hi-who">${h.nombre||h.folio||'—'}</div>
+          <div class="hi-when">📂 ${h.folio||'—'} · 🕐 ${h.fecha||'—'}</div>
+        </div>
+        <button type="button" class="hi-del-btn" onclick="delHI(${h.id})">✕</button>
+      </div>
+      <div class="hi-changes">${cambioLines||h.cambios||'—'}</div>
+      <div class="hi-footer">
+        <span style="color:${clr};font-weight:800;font-size:10px">${lbl}</span>
+        ${h.motivo&&h.motivo!=='Sin motivo'?`<span class="hi-motivo">📝 ${h.motivo}</span>`:''}
+        <span style="margin-left:auto;font-size:9px">👤 ${h.resp||'Usuario'}</span>
+      </div>
+    </div>`;
+  }).join('');
 }
 function delHI(id){H=H.filter(h=>h.id!==id);svH();renderHist();snack('Entrada eliminada');}
 
@@ -2923,6 +3046,37 @@ function showEditInfoToggle(show){
   const arrow = document.getElementById('edit-info-arrow');
   if(panel){ panel.style.maxHeight='0'; panel.style.opacity='0'; }
   if(arrow) arrow.textContent = '▼';
+}
+
+
+/* ===== v17: CURP / EDAD / GUARDAR-Y-NUEVO ===== */
+function updEdad(){
+  const fnac=document.getElementById('e-fnac')?.value;
+  const disp=document.getElementById('edad-display');
+  if(!disp)return;
+  if(!fnac){disp.style.display='none';return;}
+  const hoy=new Date(),nac=new Date(fnac+'T00:00:00');
+  let edad=hoy.getFullYear()-nac.getFullYear();
+  const m=hoy.getMonth()-nac.getMonth();
+  if(m<0||(m===0&&hoy.getDate()<nac.getDate()))edad--;
+  if(edad>=0&&edad<130){
+    disp.style.display='block';
+    const cat=edad>=60?'👴 Adulto Mayor':edad>=18?'🧑 Adulto':edad>=12?'🧒 Joven':'👶 Menor';
+    disp.textContent=`🎂 ${edad} años · ${cat}`;
+  }else{disp.style.display='none';}
+}
+
+function doSaveAndNew(){
+  // Save current record then reopen blank form
+  const prevEditId=editId;
+  doSaveRec();
+  // After save delay, reopen blank form
+  setTimeout(()=>{
+    if(!prevEditId){// only for new records
+      openShAdd();
+      snack('💾➕ Guardado — formulario listo para el siguiente','💾');
+    }
+  },1000);
 }
 
 /* ===== INIT ===== */
