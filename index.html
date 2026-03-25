@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Pensionados MX"/>
 <meta name="theme-color" id="meta-tc" content="#05090f"/>
-<title>Pensionados MX v15</title>
+<title>Pensionados MX v22</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 /* ========== THEMES ========== */
@@ -77,7 +77,7 @@
 [data-theme=arctic] .rec,[data-theme=campo] .rec{box-shadow:var(--shadow);}
 [data-theme=arctic] .hdr,[data-theme=campo] .hdr{box-shadow:0 1px 8px rgba(0,0,0,.08);}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--fnt);color:var(--txt);font-size:15px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+html,body{height:100%;height:100dvh;overflow:hidden;background:var(--bg);font-family:var(--fnt);color:var(--txt);font-size:15px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
 *::-webkit-scrollbar{display:none;}*{scrollbar-width:none;}
 input,select,textarea,button{font-family:var(--fnt);-webkit-appearance:none;appearance:none;}
 body{display:flex;flex-direction:column;}
@@ -546,6 +546,8 @@ body{display:flex;flex-direction:column;}
 /* PWA offline banner */
 .pwa-offline{display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#ef4444;color:#fff;text-align:center;font-size:11px;font-weight:800;padding:6px;letter-spacing:.3px;}
 .pwa-offline.show{display:block;}
+.sw-update-bar{display:none;position:fixed;top:0;left:0;right:0;z-index:9998;background:var(--ind);color:#fff;font-size:11px;font-weight:700;padding:8px 14px;align-items:center;justify-content:space-between;gap:8px;}
+.sw-update-bar.show{display:flex;}
 /* PWA install banner */
 .pwa-install-bar{display:none;position:fixed;bottom:calc(var(--nh,64px) + env(safe-area-inset-bottom,20px) + 8px);left:12px;right:12px;z-index:500;background:var(--lg);border-radius:14px;padding:11px 14px;align-items:center;gap:10px;box-shadow:0 8px 28px rgba(0,0,0,.4);}
 .pwa-install-bar.show{display:flex;}
@@ -729,9 +731,19 @@ body{display:flex;flex-direction:column;}
 .fab{will-change:transform;}
 .vis-prog-fill{will-change:width;}
 .sec-prog-fill{will-change:width;}
-/* ── v19: Reduce repaints en scroll ── */
+/* ── v22: Reduce blur en dispositivos lentos ── */
+@media (prefers-reduced-motion: reduce) {
+  *{transition:none !important;animation:none !important;}
+}
+@supports not (height: 100dvh){
+  html,body{height: -webkit-fill-available;}
+}
+@media (max-device-memory: 2) {
+  .hdr,.bnav,.modal-bg,.sheet,.conf-wrap{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;}
+}
+/* ── v22: Reduce repaints en scroll ── */
 .main{-webkit-transform:translateZ(0);transform:translateZ(0);}
-/* ── v19: Toque más responsivo ── */
+/* ── v22: Toque más responsivo ── */
 .rec,.df,.dqp,.btn,.hdr-btn{touch-action:manipulation;}
 
 
@@ -742,7 +754,7 @@ body{display:flex;flex-direction:column;}
    ══════════════════════════════════════ */
 
 /* ── BASE LAYOUT ── */
-html,body{font-size:15px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+html,body{font-size:15px;height:100dvh;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
 
 /* ── HEADER — glassmorphism ── */
 .hdr{
@@ -1099,8 +1111,29 @@ html,body{font-size:15px;-webkit-font-smoothing:antialiased;text-rendering:optim
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>{
     navigator.serviceWorker.register('sw.js')
-      .then(r=>console.log('SW registrado:',r.scope))
+      .then(reg=>{
+        console.log('SW registrado:',reg.scope);
+        // Detectar nueva versión disponible
+        reg.addEventListener('updatefound',()=>{
+          const nw=reg.installing;
+          nw.addEventListener('statechange',()=>{
+            if(nw.state==='installed'&&navigator.serviceWorker.controller){
+              // Hay actualización: notificar al usuario
+              const bar=document.getElementById('sw-update-bar');
+              if(bar) bar.style.display='flex';
+            }
+          });
+        });
+        // Verificar actualizaciones cada vez que la app toma foco
+        document.addEventListener('visibilitychange',()=>{
+          if(document.visibilityState==='visible') reg.update();
+        });
+      })
       .catch(e=>console.log('SW error:',e));
+    // Cuando el SW nuevo toma control: recargar para aplicar cambios
+    navigator.serviceWorker.addEventListener('controllerchange',()=>{
+      window.location.reload();
+    });
   });
 }
 </script>
@@ -1598,16 +1631,89 @@ if('serviceWorker' in navigator){
 <div class="snack" id="snack"><span id="snack-ico">✓</span><span id="snack-txt">Guardado</span></div>
 
 <script>
-/* ===== DATA ===== */
+/* ===== DATA — IndexedDB con fallback a localStorage ===== */
 const K={r:'px_v10_r',h:'px_v10_h',v:'px_v10_v',e:'px_v10_e'};
-let R=JSON.parse(localStorage.getItem(K.r)||'[]');
-let H=JSON.parse(localStorage.getItem(K.h)||'[]');
-let V=JSON.parse(localStorage.getItem(K.v)||'[]');
-let E=JSON.parse(localStorage.getItem(K.e)||'[]');
-const svR=()=>localStorage.setItem(K.r,JSON.stringify(R));
-const svH=()=>localStorage.setItem(K.h,JSON.stringify(H));
-const svV=()=>localStorage.setItem(K.v,JSON.stringify(V));
-const svE=()=>localStorage.setItem(K.e,JSON.stringify(E));
+
+// ── IndexedDB helper ──
+const IDB={
+  _db:null,
+  open(){
+    return new Promise((res,rej)=>{
+      if(this._db)return res(this._db);
+      const req=indexedDB.open('PensionadosMX',1);
+      req.onupgradeneeded=ev=>{
+        const db=ev.target.result;
+        if(!db.objectStoreNames.contains('kv'))
+          db.createObjectStore('kv');
+      };
+      req.onsuccess=ev=>{this._db=ev.target.result;res(this._db);};
+      req.onerror=()=>rej(req.error);
+    });
+  },
+  async get(key){
+    try{
+      const db=await this.open();
+      return new Promise((res,rej)=>{
+        const tx=db.transaction('kv','readonly');
+        const req=tx.objectStore('kv').get(key);
+        req.onsuccess=()=>res(req.result??null);
+        req.onerror=()=>rej(req.error);
+      });
+    }catch{return localStorage.getItem(key);}
+  },
+  async set(key,val){
+    try{
+      const db=await this.open();
+      return new Promise((res,rej)=>{
+        const tx=db.transaction('kv','readwrite');
+        tx.objectStore('kv').put(val,key);
+        tx.oncomplete=()=>res();
+        tx.onerror=()=>rej(tx.error);
+      });
+    }catch{localStorage.setItem(key,val);}
+  }
+};
+
+// ── Guardar (async, con debounce para no saturar writes) ──
+const _saveTimers={};
+function _debounceSave(key,val,ms=300){
+  clearTimeout(_saveTimers[key]);
+  _saveTimers[key]=setTimeout(()=>{
+    IDB.set(key,val).catch(()=>localStorage.setItem(key,val));
+    // Mantener copia de seguridad en localStorage (solo primeros 4KB para no llenar)
+    try{
+      const preview=val.length>4096?val.slice(0,4096)+'…TRUNCADO':val;
+      localStorage.setItem(key+'_bk',preview);
+    }catch{}
+  },ms);
+}
+
+let R=[],H=[],V=[],E=[];
+const svR=()=>_debounceSave(K.r,JSON.stringify(R));
+const svH=()=>_debounceSave(K.h,JSON.stringify(H));
+const svV=()=>_debounceSave(K.v,JSON.stringify(V));
+const svE=()=>_debounceSave(K.e,JSON.stringify(E));
+
+// ── Cargar datos al inicio ──
+async function _loadAllData(){
+  const[r,h,v,e]=await Promise.all([
+    IDB.get(K.r),IDB.get(K.h),IDB.get(K.v),IDB.get(K.e)
+  ]);
+  // Si IndexedDB tiene datos, úsalos; si no, intentar localStorage
+  R=JSON.parse(r||localStorage.getItem(K.r)||'[]');
+  H=JSON.parse(h||localStorage.getItem(K.h)||'[]');
+  V=JSON.parse(v||localStorage.getItem(K.v)||'[]');
+  E=JSON.parse(e||localStorage.getItem(K.e)||'[]');
+
+  // Migración de datos v9
+  if(R.length===0){
+    const v9=localStorage.getItem('px_v9_r')||localStorage.getItem('px_v10_r');
+    if(v9){const d=JSON.parse(v9);if(d.length>0){R=d;svR();}}
+  }
+  detectDups();upHdr();selDay=today();
+  renderInicio();renderChips();renderSFPills();
+}
+_loadAllData();
 
 // ── Section visibility toggle state ──
 let seccionesVisible = localStorage.getItem('px_sec_visible') !== 'false'; // default true
@@ -3572,22 +3678,14 @@ function inlineEditObs(id){
   inlineEdit(id,'obs',r.obs||'','text','Observaciones / Notas');
 }
 
-/* ===== INIT ===== */
-// Load data from v9 keys if v10 is empty
-(function migrateData(){
-  const oldR=localStorage.getItem('px_v10_r');
-  if(!oldR||JSON.parse(oldR).length===0){
-    // Try old key
-    const v9=localStorage.getItem('px_v9_r')||localStorage.getItem('px_v10_r');
-    if(v9){const d=JSON.parse(v9);if(d.length>0){R=d;svR();}}
-  }
-})();
-
-detectDups();upHdr();selDay=today();
-renderInicio();renderChips();renderSFPills();
+/* ===== INIT — manejado por _loadAllData() en el bloque de datos ===== */
 </script>
 
 <div class="pwa-offline" id="pwa-offline">📡 Sin conexión — La app funciona sin internet</div>
+<div class="sw-update-bar" id="sw-update-bar">
+  <span>🔄 Nueva versión disponible</span>
+  <button onclick="document.getElementById('sw-update-bar').style.display='none';navigator.serviceWorker.getRegistration().then(r=>{if(r&&r.waiting){r.waiting.postMessage({type:'SKIP_WAITING'});}})" style="background:rgba(255,255,255,.25);border:none;color:#fff;font-size:11px;font-weight:800;border-radius:8px;padding:4px 12px;cursor:pointer;">Actualizar</button>
+</div>
 <div class="pwa-install-bar" id="pwa-install-bar">
   <div class="pwa-install-txt">📲 Instala Pensionados MX<br><span style="opacity:.8;font-size:10px">Acceso rápido desde tu pantalla</span></div>
   <button class="pwa-install-btn" id="pwa-install-btn">Instalar</button>
@@ -3596,6 +3694,27 @@ renderInicio();renderChips();renderSFPills();
 <script>
 // Offline detection
 window.addEventListener('online',  ()=>document.getElementById('pwa-offline').classList.remove('show'));
+// ── v22: Fix teclado iOS — reposicionar elementos fixed cuando sube el teclado ──
+if(window.visualViewport){
+  let _ticking=false;
+  function _fixKeyboard(){
+    if(_ticking)return;_ticking=true;
+    requestAnimationFrame(()=>{
+      const vvh=window.visualViewport.height;
+      const wh=window.innerHeight;
+      const kbOffset=Math.max(0,wh-vvh);
+      const bnav=document.querySelector('.bnav');
+      const fab=document.querySelector('.fab');
+      const snk=document.getElementById('snack');
+      if(bnav) bnav.style.transform=kbOffset>50?`translateY(-${kbOffset}px)`:'';
+      if(fab)  fab.style.transform =kbOffset>50?`translateY(-${kbOffset}px)`:'';
+      if(snk)  snk.style.transform =kbOffset>50?`translateX(-50%) translateY(-${kbOffset}px)`:'translateX(-50%) translateY(10px)';
+      _ticking=false;
+    });
+  }
+  window.visualViewport.addEventListener('resize',_fixKeyboard);
+  window.visualViewport.addEventListener('scroll',_fixKeyboard);
+}
 window.addEventListener('offline', ()=>document.getElementById('pwa-offline').classList.add('show'));
 if(!navigator.onLine)document.getElementById('pwa-offline').classList.add('show');
 
