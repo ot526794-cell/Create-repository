@@ -1,4 +1,4 @@
-# 🏛️ Pensionados MX v13
+# 🏛️ Pensionados MX
 
 Sistema de gestión de beneficiarios de programas sociales.
 
