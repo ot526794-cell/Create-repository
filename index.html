@@ -13,7 +13,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Pensionados MX"/>
 <meta name="theme-color" id="meta-tc" content="#05090f"/>
-<title>Pensionados MX v22</title>
+<title>Pensionados MX v23</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 /* ========== THEMES ========== */
@@ -1106,6 +1106,29 @@ html,body{font-size:15px;-webkit-font-smoothing:antialiased;text-rendering:optim
 .sheet{will-change:transform;}
 .fab{will-change:transform;}
 
+/* ── STAT QUICK (Estadísticas) ── */
+.stat-quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;}
+.sqc{background:var(--card);border:1px solid var(--b1);border-radius:var(--r2);padding:12px 8px;text-align:center;}
+.sqc-n{font-size:26px;font-weight:800;font-family:'Fira Code',monospace;line-height:1;margin-bottom:3px;}
+.sqc-l{font-size:9px;font-weight:700;color:var(--sft);text-transform:uppercase;letter-spacing:.5px;}
+
+/* ── VOICE SEARCH ── */
+.listen-wrap{display:none;text-align:center;padding:24px 16px;background:var(--card);border:1.5px solid var(--red);border-radius:var(--r);margin-bottom:10px;}
+.listen-wrap.on{display:block;animation:fu .2s ease;}
+.listen-ring{font-size:40px;margin-bottom:10px;animation:pulse 1s infinite;}
+
+/* ── SRCH ADV BTN activo ── */
+#srch-adv-btn{transition:.15s;border-radius:8px;padding:4px 6px;}
+
+/* ── ALERTA sin visitar (fix color tema claro) ── */
+[data-theme=arctic] .alert-count,[data-theme=campo] .alert-count{color:#dc2626;}
+
+/* ── FIX: rec-info 3 columnas visible en iOS ── */
+@media (max-width:360px){
+  .rec-info{grid-template-columns:1fr 1fr;}
+  .stat-quick{grid-template-columns:repeat(2,1fr);}
+}
+
 </style>
 <script>
 if('serviceWorker' in navigator){
@@ -1200,7 +1223,7 @@ if('serviceWorker' in navigator){
     <div class="sh2">Programas</div>
     <div class="prog-row" id="prog-row"></div>
     <div id="pend-wrap"></div>
-
+    <div id="sec-toggle-area"></div>
     <div class="sh2">Recientes <span class="sh2-n" id="rc-n">0</span></div>
     <div class="recs" id="rec-recent"></div>
   </div>
@@ -1344,12 +1367,27 @@ if('serviceWorker' in navigator){
   </div>
   <!-- IMPORTAR -->
   <div class="pg" id="p-importar">
+    <div id="imp-stats-bar"></div>
     <div class="imp-z">
       <div class="imp-ico">📂</div>
       <h3>Importar Excel / CSV</h3>
-      <p>Analiza el archivo, detecta duplicados y reubica la información automáticamente.</p>
+      <p>Analiza el archivo, detecta duplicados y reubica la información automáticamente.<br><span style="font-size:10px;color:var(--amb)">⚠️ Excel (.xlsx) → convertir a CSV primero (Numbers → Exportar → CSV)</span></p>
       <input type="file" id="file-in" accept=".csv,.xlsx,.xls" style="display:none" onchange="handleImp(event)"/>
-      <button class="imp-btn" onclick="document.getElementById('file-in').click()">Seleccionar archivo</button>
+      <button class="imp-btn" onclick="document.getElementById('file-in').click()">📂 Seleccionar archivo CSV</button>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--b1);border-radius:var(--r);padding:14px;margin-bottom:10px;">
+      <div style="font-size:9px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">📋 Formato esperado del CSV</div>
+      <div style="font-size:10px;font-family:'Fira Code',monospace;color:var(--sft);background:var(--s2);border-radius:8px;padding:9px;overflow-x:auto;white-space:nowrap">FOLIO,NOMBRE,TIPO,TELEFONO,DOMICILIO,COLONIA,ESTATUS</div>
+      <div style="font-size:10px;color:var(--mut);margin-top:8px;line-height:1.6">
+        Columnas reconocidas: <span style="color:var(--a2)">folio, nombre, tipo, telefono, domicilio, numero, colonia, estatus, observacion</span><br>
+        Programas válidos: <span style="color:var(--a2)">PAM, PCD, JCF, MT, BBJ</span>
+      </div>
+    </div>
+    <div class="backup-card">
+      <div style="font-size:9px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">💾 Restaurar respaldo JSON</div>
+      <p style="font-size:11px;color:var(--mut);margin-bottom:10px;line-height:1.5">Restaura un respaldo completo (registros + historial + visitas).</p>
+      <input type="file" id="restore-in2" accept=".json" style="display:none" onchange="handleRestore(event)"/>
+      <button type="button" class="btn btn-s" style="font-size:12px" onclick="document.getElementById('restore-in2').click()">📥 Restaurar JSON</button>
     </div>
     <div id="imp-out"></div>
   </div>
@@ -1553,9 +1591,13 @@ if('serviceWorker' in navigator){
   <div class="hdl"></div>
   <div class="qf-hdr">
     <div class="qf-title" id="qf-t">Registros</div>
-    <div class="qf-n" id="qf-n">0</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="qf-n" id="qf-n">0</div>
+      <button type="button" class="hdr-btn" onclick="closeSheet('sh-qf')" style="font-size:15px">✕</button>
+    </div>
   </div>
   <div class="recs" id="qf-list"></div>
+  <div style="height:16px"></div>
 </div>
 <!-- SHEET: DUPLICADOS -->
 <div class="sheet" id="sh-dups">
@@ -1765,7 +1807,7 @@ function go(tab){
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
   const nb=document.getElementById('nb-'+tab);if(nb)nb.classList.add('on');
   document.getElementById('main').scrollTop=0;
-  const noFab=['estadisticas','descargar','historial','secciones'].includes(tab);
+  const noFab=['estadisticas','descargar','historial','secciones','importar'].includes(tab);
   document.getElementById('fab').style.display=noFab?'none':'flex';
   render(tab);
 }
@@ -1776,6 +1818,7 @@ function render(t){
   if(t==='visitas')       renderVis();
   if(t==='estadisticas')  renderStats();
   if(t==='descargar')     renderDL();
+  if(t==='importar')      renderImportar();
   if(t==='secciones')     renderSecPg();
   if(t==='historial')     renderHist();
 }
@@ -1860,7 +1903,7 @@ function cycleUso(id,e){
 function toggleSecciones(){
   seccionesVisible=!seccionesVisible;
   localStorage.setItem('px_sec_visible', seccionesVisible ? 'true' : 'false');
-  // secciones toggle en inicio desactivado
+  renderSeccionesToggle();
 }
 function renderSeccionesToggle(){
   const area=document.getElementById('sec-toggle-area');
@@ -2014,13 +2057,14 @@ function _renderInicioInner(){
       `<button class="btn btn-s" style="font-size:11px;padding:8px;margin-bottom:14px" onclick="openQF('pendientes','⏳ Pendientes')">Ver todos →</button>`;
   }else{pw.innerHTML='';}
 
-  // secciones toggle en inicio desactivado
+  // Secciones toggle en inicio
+  renderSeccionesToggle();
 
   const rec=[...R].reverse().slice(0,4);
   document.getElementById('rc-n').textContent=rec.length;
   document.getElementById('rec-recent').innerHTML=rec.length
     ? rec.map(recCard).join('')
-    : '<div class="empty"><div class="empty-ico">📋</div><h3>Sin registros</h3><p>Toca ＋ para agregar</p></div>';
+    : '<div class="empty"><div class="empty-ico">📋</div><h3>Sin registros aún</h3><p>Agrega tu primer beneficiario con el botón <b style="color:var(--a2)">＋</b> o importa un CSV</p><div style="display:flex;gap:8px;justify-content:center;margin-top:14px"><button type="button" class="btn btn-p" style="width:auto;padding:9px 18px;font-size:12px" onclick="openShAdd()">➕ Agregar</button><button type="button" class="btn btn-s" style="width:auto;padding:9px 18px;font-size:12px" onclick="go(\'importar\')">📂 Importar CSV</button></div></div>';
 }
 
 function buildHomeDonut(segs,total){
@@ -2074,6 +2118,7 @@ function openQF(filter,title){
     sin_visita_30: ()=>R.filter(r=>r.visita!=='Si'&&r.estatus!=='Baja'&&r.fecha&&daysSince(r.fecha)>30),
     vis_si:    ()=>R.filter(r=>r.visita==='Si'),
     vis_no:    ()=>R.filter(r=>r.visita==='No'),
+    dup:       ()=>{detectDups();return R.filter(r=>r.dup);},
   };
   let filtered;
   if(filter.startsWith('prog_'))filtered=R.filter(r=>r.tipo===filter.slice(5));
@@ -2439,7 +2484,7 @@ function openDet(id){
       <div class="df full" onclick="inlineEditSelect(${r.id},'tipo','${r.tipo}',['PAM','PCD','JCF','MT','BBJ'])">
         <div class="dl">📋 Programa</div><div class="dv" id="dv-tipo-${r.id}"><span style="color:${p.clr}">${p.ico} ${p.lbl}</span></div>
       </div>
-      <div class="df full" onclick="inlineEdit(${r.id},'obs','${(r.obs||'').replace(/'/g,\"\'\").replace(/\`/g,'\\`')}','text','Observaciones / Notas')">
+      <div class="df full" onclick="inlineEditObs(${r.id})">
         <div class="dl">📝 Observaciones</div><div class="dv" id="dv-obs-${r.id}" style="color:var(--sft)">${r.obs||'—'}</div>
       </div>
       <div class="df"><div class="dl">📅 Registro</div><div class="dv">${fmtD(r.fecha)}</div></div>
@@ -2808,8 +2853,16 @@ function renderVis(){
 }
 function markVis(vid){
   const v=V.find(x=>x.id===vid);if(!v)return;
-  v.people.forEach(p=>{p.status='Visitado';const r=R.find(x=>x.id===p.id);if(r)r.visita='Si';});
-  svR();svV();renderVis();snack('✅ Todos visitados','✅');
+  let cnt=0;
+  v.people.forEach(p=>{
+    p.status='Visitado';
+    const r=R.find(x=>x.id===p.id);
+    if(r&&r.visita!=='Si'){r.visita='Si';r.ult=nowStr();cnt++;}
+  });
+  H.push({id:Date.now(),folio:'VISITA',nombre:v.title,cambios:`${cnt} persona(s) marcadas como visitadas`,motivo:'Desde agenda',resp:'Usuario',fecha:nowStr(),tipo:'edit'});
+  svR();svH();svV();renderVis();
+  if(curTab==='inicio')renderInicio();
+  snack(`✅ ${cnt} visitado${cnt!==1?'s':''}  marcados`,'✅');
 }
 function delVis(vid){conf2('Eliminar visita','¿Eliminar esta visita?',()=>{V=V.filter(x=>x.id!==vid);svV();renderVis();snack('🗑️ Visita eliminada','🗑️');});}
 
@@ -2918,6 +2971,26 @@ function dlXLSX(){
   const eocd=[0x50,0x4B,0x05,0x06,0,0,0,0,...u16(Object.keys(files).length),...u16(Object.keys(files).length),...u32(cen.length),...u32(off),0,0];
   const blob=new Blob([new Uint8Array([...ent,...cen,...eocd])],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
   dlFile(`Pensionados_${today()}.xlsx`,URL.createObjectURL(blob),true);snack('⬇️ Excel descargado','⬇️');
+}
+
+/* ===== IMPORTAR PAGE ===== */
+function renderImportar(){
+  // Actualiza stats de la pantalla de importar
+  const wrap = document.getElementById('imp-stats-bar');
+  if(wrap){
+    const dups = R.filter(r=>r.dup).length;
+    wrap.innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px">
+        <div class="sec-pg-scard"><div class="sec-pg-scard-n" style="color:var(--a2)">${R.length}</div><div class="sec-pg-scard-l">Registros</div></div>
+        <div class="sec-pg-scard"><div class="sec-pg-scard-n" style="color:var(--grn)">${R.filter(r=>r.estatus==='Activo').length}</div><div class="sec-pg-scard-l">Activos</div></div>
+        <div class="sec-pg-scard"><div class="sec-pg-scard-n" style="color:${dups>0?'var(--red)':'var(--grn)'}">${dups}</div><div class="sec-pg-scard-l">Duplicados</div></div>
+      </div>`;
+  }
+  // Limpiar resultado previo si se vuelve a entrar
+  const out = document.getElementById('imp-out');
+  if(out && out.innerHTML === '') {
+    out.innerHTML = '<div style="text-align:center;padding:20px;color:var(--mut);font-size:12px">📋 Selecciona un archivo CSV para comenzar</div>';
+  }
 }
 
 /* ===== IMPORT ===== */
@@ -3326,7 +3399,6 @@ function renderSecPg(){
     const usa=regs.filter(r=>r.uso==='Estados Unidos').length;
     const act=regs.filter(r=>r.estatus==='Activo').length;
     const pct=cnt?Math.round(vis/cnt*100):0;
-    const prog=Object.entries(regs.reduce((a,r)=>{a[r.tipo]=(a[r.tipo]||0)+1;return a;},{}).valueOf?{}:regs.reduce((a,r)=>{a[r.tipo]=(a[r.tipo]||0)+1;return a;},{}));
     // Build program breakdown
     const progBreak=Object.entries(regs.reduce((a,r)=>{a[r.tipo]=(a[r.tipo]||0)+1;return a;},{}))
       .sort((a,b)=>b[1]-a[1]).slice(0,3)
@@ -3603,13 +3675,21 @@ function inlineEditObs(id){
 }
 
 /* ===== INIT ===== */
-// Load data from v9 keys if v10 is empty
+// Migrar datos de versiones anteriores si v10 está vacío
 (function migrateData(){
-  const oldR=localStorage.getItem('px_v10_r');
-  if(!oldR||JSON.parse(oldR).length===0){
-    // Try old key
-    const v9=localStorage.getItem('px_v9_r')||localStorage.getItem('px_v10_r');
-    if(v9){const d=JSON.parse(v9);if(d.length>0){R=d;svR();}}
+  const curR = localStorage.getItem('px_v10_r');
+  if(!curR || JSON.parse(curR).length === 0){
+    // Intentar claves anteriores en orden de prioridad
+    const oldKeys = ['px_v9_r','px_v8_r','px_r','pensionados_r'];
+    for(const key of oldKeys){
+      const old = localStorage.getItem(key);
+      if(old){
+        try{
+          const d = JSON.parse(old);
+          if(Array.isArray(d) && d.length > 0){ R = d; svR(); break; }
+        }catch(e){}
+      }
+    }
   }
 })();
 
